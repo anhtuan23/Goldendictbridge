@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             TextView wordView0 = (TextView) findViewById(R.id.hello0);
-            wordView0.setText(word[0]);
+            wordView0.setText(words);
             TextView wordView1 = (TextView) findViewById(R.id.hello1);
-            wordView1.setText(word[1]);
+            wordView1.setText(word[0]);
             TextView wordView2 = (TextView) findViewById(R.id.hello2);
-            wordView2.setText(word[2]);
+            wordView2.setText(word[1]);
 
             if (word[1].equals(" "))
                 sendMessage(words);
@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lookUpAgain0(View view){
-        sendMessage(word[0]);
+        sendMessage(words);
     }
 
     public void lookUpAgain1(View view){
-        sendMessage(word[1]);
+        sendMessage(word[0]);
     }
 
     public void lookUpAgain2(View view) {
-        sendMessage(word[2]);
+        sendMessage(word[1]);
     }
 }
