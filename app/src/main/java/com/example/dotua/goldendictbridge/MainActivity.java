@@ -12,7 +12,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    String word = " ";
+    String words = " ";
+    String[] word = {" ", " ", " ", " ", " "};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +22,27 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String action = intent.getAction();
-        String type = intent.getType();
-
-
 
         if (Intent.ACTION_VIEW.equals(action)) {
-            //if ("text/plain".equals(type)) {
             Uri data = intent.getData();
             List<String> params = data.getPathSegments();
-            word = params.get(0);
-            TextView wordView = (TextView) findViewById(R.id.hello);
-            wordView.setText(word);
-            sendMessage(word);
+            words = params.get(0);
+
+            int i = 0;
+            for (char c : words.toCharArray()) {
+                word[i] = String.valueOf(c);
+                i++;
+            }
+
+            TextView wordView0 = (TextView) findViewById(R.id.hello0);
+            wordView0.setText(word[0]);
+            TextView wordView1 = (TextView) findViewById(R.id.hello1);
+            wordView1.setText(word[1]);
+            TextView wordView2 = (TextView) findViewById(R.id.hello2);
+            wordView2.setText(word[2]);
+
+            if (word[1].equals(" "))
+                sendMessage(words);
         }
 
     }
@@ -40,13 +50,18 @@ public class MainActivity extends AppCompatActivity {
     public void sendMessage(String word) {
         Intent intent = new Intent("colordict.intent.action.SEARCH");
         intent.putExtra("EXTRA_QUERY", word); //Search Query
-        //String GD = intent.toUri(0x3000000);
         startActivity(intent);
     }
 
-    public void lookUpAgain(View view){
-        //String word = textView.getText().toString();
-        sendMessage(word);
+    public void lookUpAgain0(View view){
+        sendMessage(word[0]);
     }
 
+    public void lookUpAgain1(View view){
+        sendMessage(word[1]);
+    }
+
+    public void lookUpAgain2(View view) {
+        sendMessage(word[2]);
+    }
 }
