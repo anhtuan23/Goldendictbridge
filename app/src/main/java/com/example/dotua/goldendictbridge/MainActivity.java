@@ -5,15 +5,20 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    String words = " ";
-    String[] word = {" ", " ", " ", " ", " "};
+    ArrayList<String> wordList;
+    ArrayAdapter<String> wordlistAdapter;
+    String receivedWord = "Hi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,25 +31,27 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
             List<String> params = data.getPathSegments();
-            words = params.get(0);
+            receivedWord = params.get(0);
+            if (receivedWord.equals(""))
+                receivedWord = "Bonjour";
+        }
+        wordList = new ArrayList<String>();
+        wordList.add(receivedWord);
 
-            int i = 0;
-            for (char c : words.toCharArray()) {
-                word[i] = String.valueOf(c);
-                i++;
-            }
-
-            TextView wordView0 = (TextView) findViewById(R.id.hello0);
-            wordView0.setText(words);
-            TextView wordView1 = (TextView) findViewById(R.id.hello1);
-            wordView1.setText(word[0]);
-            TextView wordView2 = (TextView) findViewById(R.id.hello2);
-            wordView2.setText(word[1]);
-
-            if (word[1].equals(" "))
-                sendMessage(words);
+        for (char c : receivedWord.toCharArray()) {
+            wordList.add(String.valueOf(c));
         }
 
+        wordlistAdapter = new ArrayAdapter<String>(this,
+                R.layout.list_item_word,
+                R.id.list_item_word,
+                wordList);
+
+        ListView listViewWords = (ListView)this.findViewById(R.id.listview_words);
+        listViewWords.setAdapter(wordlistAdapter);
+
+        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
+            sendMessage(receivedWord);
     }
 
     public void sendMessage(String word) {
@@ -53,15 +60,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void lookUpAgain0(View view){
-        sendMessage(words);
-    }
-
-    public void lookUpAgain1(View view){
-        sendMessage(word[0]);
-    }
-
-    public void lookUpAgain2(View view) {
-        sendMessage(word[1]);
+    public void lookUpAgain(View view){
+        TextView textView = (TextView)view;
+        sendMessage(textView.getText().toString());
     }
 }

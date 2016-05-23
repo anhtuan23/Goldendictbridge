@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:background="#000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,34 +9,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dotua.goldendictbridge.MainActivity">
-        <TextView
-        android:id="@+id/hello0"
+
+    <ListView
+        android:id="@+id/listview_words"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="56sp"
-        android:textColor="#fff"
-        android:fontFamily="sans-serif-light"
-        android:onClick="lookUpAgain0"/>
-    <TextView
-        android:id="@+id/hello1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="56sp"
-        android:textColor="#fff"
-        android:fontFamily="sans-serif-light"
-        android:onClick="lookUpAgain1"/>
-    <TextView
-        android:id="@+id/hello2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="56sp"
-        android:textColor="#fff"
-        android:fontFamily="sans-serif-light"
-        android:onClick="lookUpAgain2"/>
-</LinearLayout>
+        android:layout_height="match_parent"></ListView>
+
+</FrameLayout>
