@@ -2,15 +2,13 @@ package com.example.dotua.goldendictbridge;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
             if (receivedWord.equals(""))
                 receivedWord = "Bonjour";
         }
+
+        if (Intent.ACTION_SEND.equals(action)) {
+            String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText != null) {
+                receivedWord = sharedText;
+            } else {
+                receivedWord = "Bonjour";
+            }
+        }
+
         wordList = new ArrayList<String>();
         wordList.add(receivedWord);
 
