@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingTop="15dp"
-    android:paddingBottom="20dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
     android:gravity="center"
     android:textSize="70sp"
     android:textColor="#fff"
-    android:fontFamily="sans-serif-light"
-    android:onClick="lookUpAgain">
+    android:fontFamily="sans-serif-light">
 </TextView>

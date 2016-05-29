@@ -1,75 +1,75 @@
 package com.example.dotua.goldendictbridge;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> wordList;
-    ArrayAdapter<String> wordlistAdapter;
-    String receivedWord = "Hi";
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        String action = intent.getAction();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        if (Intent.ACTION_VIEW.equals(action)) {
-            Uri data = intent.getData();
-            List<String> params = data.getPathSegments();
-            receivedWord = params.get(0);
-            if (receivedWord.equals(""))
-                receivedWord = "Bonjour";
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (Intent.ACTION_SEND.equals(action)) {
-            String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (sharedText != null) {
-                receivedWord = sharedText;
-            } else {
-                receivedWord = "Bonjour";
-            }
-        }
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        wordList = new ArrayList<String>();
-        wordList.add(receivedWord);
-
-        for (char c : receivedWord.toCharArray()) {
-            wordList.add(String.valueOf(c));
-        }
-
-        wordlistAdapter = new ArrayAdapter<String>(this,
-                R.layout.list_item_word,
-                R.id.list_item_word,
-                wordList);
-
-        ListView listViewWords = (ListView)this.findViewById(R.id.listview_words);
-        listViewWords.setAdapter(wordlistAdapter);
-
-        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
-            sendMessage(receivedWord);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void sendMessage(String word) {
-        Intent intent = new Intent("colordict.intent.action.SEARCH");
-        intent.putExtra("EXTRA_QUERY", word); //Search Query
-        startActivity(intent);
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new OneFragment(), "ONE");
+        adapter.addFragment(new TwoFragment(), "TWO");
+        adapter.addFragment(new ThreeFragment(), "THREE");
+        viewPager.setAdapter(adapter);
     }
 
-    public void lookUpAgain(View view){
-        TextView textView = (TextView)view;
-        sendMessage(textView.getText().toString());
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

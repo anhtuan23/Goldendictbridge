@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Goldendict bridge</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_1_title">One</string>
+    <string name="tab_2_title">Two</string>
+    <string name="tab_3_title">Three</string>
 </resources>
