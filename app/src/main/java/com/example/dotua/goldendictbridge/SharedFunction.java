@@ -50,7 +50,7 @@ public class SharedFunction {
         ArrayList<String> wordList;
         ArrayList<String> combinedWordList;
         ArrayAdapter<String> wordlistAdapter;
-        String receivedWord = "Hi";
+        String receivedWord = "明天更残酷";
 
 
         String action = intent.getAction();

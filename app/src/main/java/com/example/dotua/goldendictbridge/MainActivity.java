@@ -89,10 +89,13 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.myswitch);
         Switch switchMode= (Switch)item.getActionView().
                 findViewById(R.id.switch_share_mode);
+        switchMode.setChecked(true);
 
         final SharedPreferences sharedPref = this.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.pref_switch_mode_key), true);
+        editor.commit();
 
         switchMode.setOnClickListener(new View.OnClickListener() {
             @Override
