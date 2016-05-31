@@ -2,6 +2,7 @@ package com.example.dotua.goldendictbridge;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +20,21 @@ public class SharedFunction {
 
 
     public static void sendMessage(Context context, String word) {
-        Intent intent = new Intent("colordict.intent.action.SEARCH");
-        intent.putExtra("EXTRA_QUERY", word); //Search Query
-        context.startActivity(intent);
+        final SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        //CAUTION: the switch is not binded to sharedpreference
+        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_switch_mode_key), true);
+        if (b) {
+            Intent intent = new Intent("colordict.intent.action.SEARCH");
+            intent.putExtra("EXTRA_QUERY", word); //Search Query
+            context.startActivity(intent);
+        } else {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, word);
+            sendIntent.setType("text/plain");
+            context.startActivity(sendIntent);
+        }
     }
 
     public static void lookUpAgain(Context context, View view){
@@ -73,13 +86,10 @@ public class SharedFunction {
         if (characterNumber == 1){
             combinedWordList = wordList;
         }else if (characterNumber == 2){
-            wordList.add("");
-            for (int i = 1; i < wordListSize; i++)
+            for (int i = 1; i < wordListSize-1; i++)
                 combinedWordList.add(wordList.get(i) + wordList.get(i+1));
         }else if (characterNumber == 3){
-            wordList.add("");
-            wordList.add("");
-            for (int i = 1; i < wordListSize; i++)
+            for (int i = 1; i < wordListSize-2; i++)
                 combinedWordList.add(wordList.get(i) + wordList.get(i+1) + wordList.get(i+2));
         }
 
@@ -91,6 +101,7 @@ public class SharedFunction {
 
         ListView listViewWords = (ListView)rootView.findViewById(R.id.listview_words);
         listViewWords.setAdapter(wordlistAdapter);
+        //setListViewHeightBasedOnChildren(listViewWords);
 
         if (wordListSize <= 2 && !wordList.get(0).equals(" ") )
             sendMessage(context, receivedWord);
@@ -103,4 +114,7 @@ public class SharedFunction {
             }
         });
     }
+
 }
+
+

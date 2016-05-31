@@ -6,4 +6,10 @@
     <string name="tab_1_title">One</string>
     <string name="tab_2_title">Two</string>
     <string name="tab_3_title">Three</string>
+
+    <string name="mode_switch_label">Goldendict Mode</string>
+
+    <string name="preference_file_key">goledendictbridge.preference_general</string>
+    <string name="pref_switch_mode_key">switch_mode</string>
+
 </resources>
