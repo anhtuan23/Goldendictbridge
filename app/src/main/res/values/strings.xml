@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Goldendict bridge</string>
+    <string name="app_title">Bridge</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -12,4 +13,9 @@
     <string name="preference_file_key">goledendictbridge.preference_general</string>
     <string name="pref_switch_mode_key">switch_mode</string>
 
+    <string-array name="array_navigation_drawer">
+        <item>Night mode</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
