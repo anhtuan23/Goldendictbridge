@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Goldendict bridge</string>
+    <string name="app_name">Goldendict Bridge</string>
     <string name="app_title">Bridge</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -8,14 +8,14 @@
     <string name="tab_2_title">Two</string>
     <string name="tab_3_title">Three</string>
 
-    <string name="mode_switch_label">Goldendict Mode</string>
-
     <string name="preference_file_key">goledendictbridge.preference_general</string>
-    <string name="pref_switch_mode_key">switch_mode</string>
+    <string name="pref_share_mode_key">switch_mode</string>
+    <string name="pref_night_mode">night_mode</string>
 
-    <string-array name="array_navigation_drawer">
-        <item>Night mode</item>
-    </string-array>
+    <string name="bundle_key_number_of_character">numberOfCharacter</string>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="night_mode">Night mode</string>
 </resources>

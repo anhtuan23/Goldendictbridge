@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,22 +19,31 @@ import java.util.List;
  */
 public class SharedFunction {
 
+    public static MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
+        MyFragment myFragment = new MyFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(context.getString(R.string.bundle_key_number_of_character), numberOfCharacter);
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
 
     public static void sendMessage(Context context, String word) {
         final SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         //CAUTION: the switch is not binded to sharedpreference
-        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_switch_mode_key), true);
+        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
         if (b) {
-            Intent intent = new Intent("colordict.intent.action.SEARCH");
-            intent.putExtra("EXTRA_QUERY", word); //Search Query
-            context.startActivity(intent);
-        } else {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, word);
             sendIntent.setType("text/plain");
             context.startActivity(sendIntent);
+        } else {
+            Intent intent = new Intent("colordict.intent.action.SEARCH");
+            intent.putExtra("EXTRA_QUERY", word); //Search Query
+            context.startActivity(intent);
         }
     }
 
