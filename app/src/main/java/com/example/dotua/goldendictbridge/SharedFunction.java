@@ -20,7 +20,6 @@ import java.util.List;
 public class SharedFunction {
     private  static List<String> wordList;
     private static String receivedWord = "明天更残酷";
-    private static Context mContext;
 
     public static MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
         MyFragment myFragment = new MyFragment();
@@ -32,32 +31,25 @@ public class SharedFunction {
         return myFragment;
     }
 
-    public static void sendMessage(String word) {
-        final SharedPreferences sharedPref = mContext.getSharedPreferences(
-                mContext.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+    public static void sendMessage(Context context, String word) {
+        final SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         //CAUTION: the switch is not binded to sharedpreference
-        boolean b = sharedPref.getBoolean(mContext.getString(R.string.pref_share_mode_key), false);
+        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
         if (b) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, word);
             sendIntent.setType("text/plain");
-            mContext.startActivity(sendIntent);
+            context.startActivity(sendIntent);
         } else {
             Intent intent = new Intent("colordict.intent.action.SEARCH");
             intent.putExtra("EXTRA_QUERY", word); //Search Query
-            mContext.startActivity(intent);
+            context.startActivity(intent);
         }
     }
-    public static void sendViewIntent(String word, int itemId) {
 
-    }
-
-    public static void executeFragmentWordIntent (final Context context,
-                                                  Intent intent,
-                                                  View rootView,
-                                                  int numberOfCharacter){
-        mContext = context;
+    public static  void getWordList(Context context, Intent intent){
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -83,7 +75,13 @@ public class SharedFunction {
             wordList.add(String.valueOf(c));
         }
 
-        //////////////////////////////////////
+        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
+            sendMessage(context, receivedWord);
+    }
+
+    public static void executeFragmentWordIntent (final Context context,
+                                                  View rootView,
+                                                  int numberOfCharacter){
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new MarginDecoration(context));
         recyclerView.setHasFixedSize(true);
@@ -93,7 +91,7 @@ public class SharedFunction {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(((TextView)v).getText().toString());
+                sendMessage(context, ((TextView)v).getText().toString());
             }
         });
         final WordListAdapter adapter = new WordListAdapter(header, wordList, numberOfCharacter);
@@ -120,11 +118,6 @@ public class SharedFunction {
             string = wordList.get(position);
         }
         return string;
-    }
-
-    public static void transferInstantly (){
-        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
-            sendMessage(receivedWord);
     }
 }
 

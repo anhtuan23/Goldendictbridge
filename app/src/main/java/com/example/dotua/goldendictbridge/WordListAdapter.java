@@ -56,7 +56,7 @@ public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
     holder.textView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        sendMessage(sendString);
+        sendMessage(v.getContext(), sendString);
       }
     });
 

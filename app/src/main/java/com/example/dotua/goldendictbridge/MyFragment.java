@@ -1,6 +1,5 @@
 package com.example.dotua.goldendictbridge;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,9 +27,8 @@ public class MyFragment extends Fragment {
         int numberOfCharacter = getArguments().getInt(getString(R.string.bundle_key_number_of_character), 1);
 
         View rootView = inflater.inflate(R.layout.activity_auto_fit_recycler_view, container, false);
-        Intent intent = getActivity().getIntent();
 
-        executeFragmentWordIntent(getActivity(),intent, rootView, numberOfCharacter);
+        executeFragmentWordIntent(getActivity(), rootView, numberOfCharacter);
         return rootView;
     }
 

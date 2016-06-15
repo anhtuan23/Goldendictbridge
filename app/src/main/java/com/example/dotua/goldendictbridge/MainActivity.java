@@ -16,8 +16,8 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.dotua.goldendictbridge.SharedFunction.getWordList;
 import static com.example.dotua.goldendictbridge.SharedFunction.newMyFragmentInstance;
-import static com.example.dotua.goldendictbridge.SharedFunction.transferInstantly;
 
 public class MainActivity extends NavigationDrawerActivity {
 
@@ -31,6 +31,7 @@ public class MainActivity extends NavigationDrawerActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        getWordList(this,this.getIntent());
     }
 
 
@@ -101,10 +102,6 @@ public class MainActivity extends NavigationDrawerActivity {
                 editor.commit();
             }
         });
-
-        transferInstantly();
         return true;
     }
-
-
 }
