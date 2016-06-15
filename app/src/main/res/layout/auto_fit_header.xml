@@ -6,7 +6,11 @@
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:text="Header ...................."
-    android:textColor="@android:color/holo_blue_light"
-    android:background="@android:color/holo_blue_dark"
+    android:textColor="@color/colorText"
+    android:background="@color/colorCardBackground"
+    android:textSize="50sp"
+    android:textAlignment="center"
+    android:elevation="8dp"
     android:padding="8dp"
+    android:longClickable="true"
     tools:text="0"/>

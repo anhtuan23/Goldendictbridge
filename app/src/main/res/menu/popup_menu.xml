@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bing_dict"
+        android:title="Bing Dict"/>
+
+    <item
+        android:id="@+id/character_pop"
+        android:title="Character Pop"/>
+
+    <item
+        android:id="@+id/image"
+        android:title="Image"/>
+
+</menu>

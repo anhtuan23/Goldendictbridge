@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:textColor="@android:color/holo_blue_light"
-    android:background="@android:color/holo_blue_dark"
+    android:textColor="@color/colorText"
+    android:background="@color/colorCardBackground"
+    android:textSize="40sp"
+    android:textAlignment="center"
+    android:elevation="4dp"
     android:padding="8dp"
+    android:longClickable="true"
     tools:text="0"/>

@@ -18,6 +18,9 @@ import java.util.List;
  * Created by dotua on 29-May-16.
  */
 public class SharedFunction {
+    private  static List<String> wordList;
+    private static String receivedWord = "明天更残酷";
+    private static Context mContext;
 
     public static MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
         MyFragment myFragment = new MyFragment();
@@ -29,36 +32,32 @@ public class SharedFunction {
         return myFragment;
     }
 
-    public static void sendMessage(Context context, String word) {
-        final SharedPreferences sharedPref = context.getSharedPreferences(
-                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+    public static void sendMessage(String word) {
+        final SharedPreferences sharedPref = mContext.getSharedPreferences(
+                mContext.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         //CAUTION: the switch is not binded to sharedpreference
-        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
+        boolean b = sharedPref.getBoolean(mContext.getString(R.string.pref_share_mode_key), false);
         if (b) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, word);
             sendIntent.setType("text/plain");
-            context.startActivity(sendIntent);
+            mContext.startActivity(sendIntent);
         } else {
             Intent intent = new Intent("colordict.intent.action.SEARCH");
             intent.putExtra("EXTRA_QUERY", word); //Search Query
-            context.startActivity(intent);
+            mContext.startActivity(intent);
         }
     }
+    public static void sendViewIntent(String word, int itemId) {
 
-    public static void lookUpAgain(Context context, View view){
-        TextView textView = (TextView)view;
-        sendMessage(context, textView.getText().toString());
     }
 
     public static void executeFragmentWordIntent (final Context context,
                                                   Intent intent,
                                                   View rootView,
                                                   int numberOfCharacter){
-
-        List<String> wordList;
-        String receivedWord = "明天更残酷";
+        mContext = context;
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -83,6 +82,7 @@ public class SharedFunction {
         for (char c : receivedWord.toCharArray()) {
             wordList.add(String.valueOf(c));
         }
+
         //////////////////////////////////////
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new MarginDecoration(context));
@@ -93,7 +93,7 @@ public class SharedFunction {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(context,((TextView)v).getText().toString());
+                sendMessage(((TextView)v).getText().toString());
             }
         });
         final WordListAdapter adapter = new WordListAdapter(header, wordList, numberOfCharacter);
@@ -107,10 +107,6 @@ public class SharedFunction {
         });
 
         recyclerView.setAdapter(adapter);
-
-        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
-            sendMessage(context, receivedWord);
-
     }
 
     public static String getDesiredString (List<String> wordList,int numberOfCharacter, int position){
@@ -124,6 +120,11 @@ public class SharedFunction {
             string = wordList.get(position);
         }
         return string;
+    }
+
+    public static void transferInstantly (){
+        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
+            sendMessage(receivedWord);
     }
 }
 

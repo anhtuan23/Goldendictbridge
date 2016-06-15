@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dotua.goldendictbridge.SharedFunction.newMyFragmentInstance;
+import static com.example.dotua.goldendictbridge.SharedFunction.transferInstantly;
 
 public class MainActivity extends NavigationDrawerActivity {
 
@@ -29,6 +30,7 @@ public class MainActivity extends NavigationDrawerActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
 
@@ -100,20 +102,9 @@ public class MainActivity extends NavigationDrawerActivity {
             }
         });
 
+        transferInstantly();
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//        if (id == R.id.switch_share_mode) {
-//            Toast toast = new Toast(this);
-//            toast.setText("HERE");
-//            toast.show();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 }
