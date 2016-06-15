@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,14 +55,10 @@ public class SharedFunction {
     public static void executeFragmentWordIntent (final Context context,
                                                   Intent intent,
                                                   View rootView,
-                                                  int characterNumber){
+                                                  int numberOfCharacter){
 
-        ArrayList<String> wordList;
-        ArrayList<String> combinedWordList;
-        ArrayAdapter<String> wordlistAdapter;
+        List<String> wordList;
         String receivedWord = "明天更残酷";
-
-
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -83,48 +79,52 @@ public class SharedFunction {
         }
 
         wordList = new ArrayList<>();
-        wordList.add(receivedWord);
-        combinedWordList = new ArrayList<>();
-        combinedWordList.add(receivedWord);
 
         for (char c : receivedWord.toCharArray()) {
             wordList.add(String.valueOf(c));
         }
+        //////////////////////////////////////
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView.addItemDecoration(new MarginDecoration(context));
+        recyclerView.setHasFixedSize(true);
 
-        int wordListSize = wordList.size();
-
-        if (characterNumber == 1){
-            combinedWordList = wordList;
-        }else if (characterNumber == 2){
-            for (int i = 1; i < wordListSize-1; i++)
-                combinedWordList.add(wordList.get(i) + wordList.get(i+1));
-        }else if (characterNumber == 3){
-            for (int i = 1; i < wordListSize-2; i++)
-                combinedWordList.add(wordList.get(i) + wordList.get(i+1) + wordList.get(i+2));
-        }
-
-
-        wordlistAdapter = new ArrayAdapter<String>(context,
-                R.layout.list_item_word,
-                R.id.list_item_word,
-                combinedWordList);
-
-        ListView listViewWords = (ListView)rootView.findViewById(R.id.listview_words);
-        listViewWords.setAdapter(wordlistAdapter);
-        //setListViewHeightBasedOnChildren(listViewWords);
-
-        if (wordListSize <= 2 && !wordList.get(0).equals(" ") )
-            sendMessage(context, receivedWord);
-
-        listViewWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                lookUpAgain(context, view);
+        TextView header = (TextView)LayoutInflater.from(context).inflate(R.layout.auto_fit_header, recyclerView, false);
+        header.setText(receivedWord);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(context,((TextView)v).getText().toString());
             }
         });
+        final WordListAdapter adapter = new WordListAdapter(header, wordList, numberOfCharacter);
+
+        final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return adapter.isHeader(position) ? manager.getSpanCount() : 1;
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
+
+        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
+            sendMessage(context, receivedWord);
+
     }
 
+    public static String getDesiredString (List<String> wordList,int numberOfCharacter, int position){
+        String string;
+        int wordListSize = wordList.size();
+        if (numberOfCharacter == 2 && position < wordListSize-1){
+            string = wordList.get(position) + wordList.get(position+1);
+        }else if (numberOfCharacter == 3 && position < wordListSize-2){
+            string = wordList.get(position) + wordList.get(position+1) + wordList.get(position+2);
+        } else {
+            string = wordList.get(position);
+        }
+        return string;
+    }
 }
 
 

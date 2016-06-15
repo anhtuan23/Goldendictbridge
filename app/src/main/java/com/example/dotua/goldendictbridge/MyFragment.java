@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import static com.example.dotua.goldendictbridge.SharedFunction.executeFragmentWordIntent;
 
 public class MyFragment extends Fragment {
@@ -19,8 +20,6 @@ public class MyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -28,8 +27,8 @@ public class MyFragment extends Fragment {
                              Bundle savedInstanceState) {
         int numberOfCharacter = getArguments().getInt(getString(R.string.bundle_key_number_of_character), 1);
 
+        View rootView = inflater.inflate(R.layout.activity_auto_fit_recycler_view, container, false);
         Intent intent = getActivity().getIntent();
-        View rootView = inflater.inflate(R.layout.fragment_one, container, false);
 
         executeFragmentWordIntent(getActivity(),intent, rootView, numberOfCharacter);
         return rootView;
