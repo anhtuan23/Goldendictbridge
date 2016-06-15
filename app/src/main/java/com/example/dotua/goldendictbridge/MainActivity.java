@@ -76,13 +76,17 @@ public class MainActivity extends NavigationDrawerActivity {
         MenuItem item = menu.findItem(R.id.my_toggle);
         ToggleButton switchModeToggle= (ToggleButton)item.getActionView().
                 findViewById(R.id.toggle_share_mode);
-        switchModeToggle.setChecked(false);
+
 
         final SharedPreferences sharedPref = this.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        switchModeToggle.setChecked(sharedPref.getBoolean(getString(R.string.pref_share_mode_key),false));
+
         final SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.pref_share_mode_key), false);
-        editor.commit();
+        //set false as default
+//        editor.putBoolean(getString(R.string.pref_share_mode_key), false);
+//        editor.commit();
 
         switchModeToggle.setOnClickListener(new View.OnClickListener() {
             @Override
