@@ -1,18 +1,15 @@
 package com.example.dotua.goldendictbridge;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 
 import java.util.List;
 
 import static com.example.dotua.goldendictbridge.SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.SharedFunction.sendMessage;
+import static com.example.dotua.goldendictbridge.SharedFunction.showPopupMenu;
 
 public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
   private static final int ITEM_VIEW_TYPE_HEADER = 0;
@@ -63,51 +60,15 @@ public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
     holder.textView.setOnLongClickListener(new View.OnLongClickListener(){
       @Override
       public boolean onLongClick(View v) {
-        showPopupMenu(v, position);
+        sendToPopupMenu(v, position);
         return true;
       }
     });
   }
 
-  private void showPopupMenu (final View v, final int position){
-    //Creating the instance of PopupMenu
-    PopupMenu popup = new PopupMenu(v.getContext(), v);
-    //Inflating the Popup using xml file
-    popup.getMenuInflater()
-            .inflate(R.menu.popup_menu, popup.getMenu());
-
-    //registering popup with OnMenuItemClickListener
-    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-      public boolean onMenuItemClick(MenuItem item) {
-        String sendString = getDesiredString(words,numberOfCharacter,position-1);
-        String baseurl;
-        Uri builtUri = Uri.parse(("https://www.google.com"));
-        Intent intent;
-        switch (item.getItemId()) {
-          case R.id.bing_dict:
-            baseurl = "http://www.bing.com/dict/search?mkt=zh-CN&setlang=ZH";
-            builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
-            break;
-          case R.id.character_pop:
-            baseurl = "https://characterpop.com/explode";
-            builtUri = Uri.parse(baseurl).buildUpon().appendPath(sendString).build();
-            break;
-          case R.id.image:
-            baseurl = "https://www.google.com/search?tbm=isch";
-            builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
-            break;
-          default:
-            break;
-
-        }
-        intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(builtUri);
-        v.getContext().startActivity(intent);
-        return  true;
-      }
-    });
-
-    popup.show(); //showing popup menu
+  private void sendToPopupMenu(final View v, final int position){
+    String sendString = getDesiredString(words,numberOfCharacter,position-1);
+    showPopupMenu(v,sendString);
   }
 
   @Override
