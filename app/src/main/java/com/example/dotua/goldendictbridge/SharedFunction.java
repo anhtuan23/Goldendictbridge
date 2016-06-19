@@ -1,5 +1,6 @@
 package com.example.dotua.goldendictbridge;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,10 +59,15 @@ public class SharedFunction {
             receivedWord = params.get(0);
             if (receivedWord.equals(""))
                 receivedWord = "Bonjour";
-        }
-
-        if (Intent.ACTION_SEND.equals(action)) {
+        } else if (Intent.ACTION_SEND.equals(action)) {
             String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText != null) {
+                receivedWord = sharedText;
+            } else {
+                receivedWord = "Bonjour";
+            }
+        } else if (Intent.ACTION_SEARCH.equals(action)) {
+            String sharedText = intent.getStringExtra(SearchManager.QUERY);
             if (sharedText != null) {
                 receivedWord = sharedText;
             } else {
