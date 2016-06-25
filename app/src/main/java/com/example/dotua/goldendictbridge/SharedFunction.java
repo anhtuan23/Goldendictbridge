@@ -148,22 +148,32 @@ public class SharedFunction {
                     case R.id.bing_dict:
                         baseurl = "http://www.bing.com/dict/search?mkt=zh-CN&setlang=ZH";
                         builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(builtUri);
+                        v.getContext().startActivity(intent);
                         break;
                     case R.id.character_pop:
                         baseurl = "https://characterpop.com/explode";
                         builtUri = Uri.parse(baseurl).buildUpon().appendPath(sendString).build();
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(builtUri);
+                        v.getContext().startActivity(intent);
                         break;
                     case R.id.image:
                         baseurl = "https://www.google.com/search?tbm=isch";
                         builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(builtUri);
+                        v.getContext().startActivity(intent);
+                        break;
+                    case  R.id.send_to_search_box:
+                        MainActivity.updateSeachViewQuery(sendString);
                         break;
                     default:
                         break;
 
                 }
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(builtUri);
-                v.getContext().startActivity(intent);
+
                 return  true;
             }
         });

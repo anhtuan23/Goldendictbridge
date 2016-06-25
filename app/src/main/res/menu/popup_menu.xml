@@ -13,4 +13,7 @@
         android:id="@+id/image"
         android:title="Image"/>
 
+    <item
+        android:id="@+id/send_to_search_box"
+        android:title="Send to Search"/>
 </menu>

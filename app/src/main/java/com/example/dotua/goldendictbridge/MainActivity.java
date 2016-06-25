@@ -23,6 +23,9 @@ import static com.example.dotua.goldendictbridge.SharedFunction.newMyFragmentIns
 
 public class MainActivity extends NavigationDrawerActivity {
 
+    private static Menu mOptionsMenu = null;
+    public Menu getMenu(){return mOptionsMenu;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +79,8 @@ public class MainActivity extends NavigationDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mOptionsMenu = menu;
         getMenuInflater().inflate(R.menu.mainmenu, menu);
-
-
 
         MenuItem item = menu.findItem(R.id.my_toggle);
         ToggleButton switchModeToggle= (ToggleButton)item.getActionView().
@@ -115,4 +117,16 @@ public class MainActivity extends NavigationDrawerActivity {
                 searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
+
+    public static void updateSeachViewQuery(String query) {
+//        if (mOptionsMenu != null) {
+//            onPrepareOptionsMenu(mOptionsMenu);
+//        }
+        SearchView searchView =
+                (SearchView) mOptionsMenu.findItem(R.id.search).getActionView();
+        searchView.setQuery(query, false);
+        searchView.setIconified(false);
+    }
+
+
 }
