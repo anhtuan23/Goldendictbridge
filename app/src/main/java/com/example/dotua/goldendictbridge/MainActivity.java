@@ -102,7 +102,7 @@ public class MainActivity extends NavigationDrawerActivity {
                 } else {
                     editor.putBoolean(getString(R.string.pref_share_mode_key), false);
                 }
-                editor.commit();
+                editor.apply();
             }
         });
 

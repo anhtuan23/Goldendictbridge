@@ -11,6 +11,7 @@
     <string name="preference_file_key">goledendictbridge.preference_general</string>
     <string name="pref_share_mode_key">switch_mode</string>
     <string name="pref_night_mode">night_mode</string>
+    <string name="pref_latest_sent_string">latest_sent_string</string>
 
     <string name="bundle_key_number_of_character">numberOfCharacter</string>
 

@@ -17,9 +17,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dotua on 29-May-16.
- */
 public class SharedFunction {
     private  static List<String> wordList;
     private static String receivedWord = "明天更残酷";
@@ -35,8 +32,12 @@ public class SharedFunction {
     }
 
     public static void sendMessage(Context context, String word) {
-        final SharedPreferences sharedPref = context.getSharedPreferences(
+        SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.pref_latest_sent_string), word);
+        editor.apply();
+
         //CAUTION: the switch is not binded to sharedpreference
         boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
         if (b) {
@@ -83,8 +84,15 @@ public class SharedFunction {
             wordList.add(String.valueOf(c));
         }
 
-        if (wordList.size() <= 2 && !wordList.get(0).equals(" ") )
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String latestEntry = sharedPref.getString(context.getString(R.string.pref_latest_sent_string), "Bonjour");
+
+        if (!receivedWord.equals(latestEntry) &&
+                wordList.size() <= 2 &&
+                !wordList.get(0).equals(" ") ) {
             sendMessage(context, receivedWord);
+        }
     }
 
     public static void executeFragmentWordIntent (final Context context,
