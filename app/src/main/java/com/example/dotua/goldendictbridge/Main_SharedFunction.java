@@ -38,7 +38,7 @@ public class Main_SharedFunction {
         editor.putString(context.getString(R.string.pref_latest_sent_string), word);
         editor.apply();
 
-        //CAUTION: the switch is not binded to sharedpreference
+        //CAUTION: the switch is not bind to sharedPreference
         boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
         if (b) {
             Intent sendIntent = new Intent();
@@ -141,27 +141,27 @@ public class Main_SharedFunction {
         //registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                String baseurl;
-                Uri builtUri = Uri.parse(("https://www.google.com"));
+                String baseUrl;
+                Uri builtUri;
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.bing_dict:
-                        baseurl = "http://www.bing.com/dict/search?mkt=zh-CN&setlang=ZH";
-                        builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
+                        baseUrl = "http://www.bing.com/dict/search?mkt=zh-CN&setlang=ZH";
+                        builtUri = Uri.parse(baseUrl).buildUpon().appendQueryParameter("q", sendString).build();
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(builtUri);
                         v.getContext().startActivity(intent);
                         break;
                     case R.id.character_pop:
-                        baseurl = "https://characterpop.com/explode";
-                        builtUri = Uri.parse(baseurl).buildUpon().appendPath(sendString).build();
+                        baseUrl = "https://characterpop.com/explode";
+                        builtUri = Uri.parse(baseUrl).buildUpon().appendPath(sendString).build();
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(builtUri);
                         v.getContext().startActivity(intent);
                         break;
                     case R.id.image:
-                        baseurl = "https://www.google.com/search?tbm=isch";
-                        builtUri = Uri.parse(baseurl).buildUpon().appendQueryParameter("q", sendString).build();
+                        baseUrl = "https://www.google.com/search?tbm=isch";
+                        builtUri = Uri.parse(baseUrl).buildUpon().appendQueryParameter("q", sendString).build();
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(builtUri);
                         v.getContext().startActivity(intent);

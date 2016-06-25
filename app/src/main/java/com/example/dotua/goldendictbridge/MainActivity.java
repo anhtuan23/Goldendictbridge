@@ -116,13 +116,11 @@ public class MainActivity extends NavigationDrawerActivity {
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         return true;
     }
 
     public static void updateSeachViewQuery(String query) {
-//        if (mOptionsMenu != null) {
-//            onPrepareOptionsMenu(mOptionsMenu);
-//        }
         SearchView searchView =
                 (SearchView) mOptionsMenu.findItem(R.id.search).getActionView();
         searchView.setQuery(query, false);
