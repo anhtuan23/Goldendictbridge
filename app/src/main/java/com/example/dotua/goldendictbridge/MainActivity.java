@@ -18,8 +18,8 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.dotua.goldendictbridge.SharedFunction.getWordList;
-import static com.example.dotua.goldendictbridge.SharedFunction.newMyFragmentInstance;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.getWordList;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.newMyFragmentInstance;
 
 public class MainActivity extends NavigationDrawerActivity {
 
@@ -45,6 +45,7 @@ public class MainActivity extends NavigationDrawerActivity {
         adapter.addFragment(newMyFragmentInstance(this, 1), "ONE");
         adapter.addFragment(newMyFragmentInstance(this, 2), "TWO");
         adapter.addFragment(newMyFragmentInstance(this, 3), "THREE");
+        adapter.addFragment(newMyFragmentInstance(this, 4), "FOUR");
         viewPager.setAdapter(adapter);
     }
 

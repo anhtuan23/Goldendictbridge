@@ -5,10 +5,10 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class MarginDecoration extends RecyclerView.ItemDecoration {
+public class RecyclerView_MarginDecoration extends RecyclerView.ItemDecoration {
   private int margin;
 
-  public MarginDecoration(Context context) {
+  public RecyclerView_MarginDecoration(Context context) {
     margin = context.getResources().getDimensionPixelSize(R.dimen.item_margin);
   }
 

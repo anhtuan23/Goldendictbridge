@@ -17,12 +17,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharedFunction {
+public class Main_SharedFunction {
     private  static List<String> wordList;
     private static String receivedWord = "明天更残酷";
 
-    public static MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
-        MyFragment myFragment = new MyFragment();
+    public static Main_MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
+        Main_MyFragment myFragment = new Main_MyFragment();
 
         Bundle args = new Bundle();
         args.putInt(context.getString(R.string.bundle_key_number_of_character), numberOfCharacter);
@@ -99,7 +99,7 @@ public class SharedFunction {
                                                   View rootView,
                                                   int numberOfCharacter){
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        recyclerView.addItemDecoration(new MarginDecoration(context));
+        recyclerView.addItemDecoration(new RecyclerView_MarginDecoration(context));
         recyclerView.setHasFixedSize(true);
 
         TextView header = (TextView)LayoutInflater.from(context).inflate(R.layout.auto_fit_header, recyclerView, false);
@@ -118,7 +118,7 @@ public class SharedFunction {
             }
         });
 
-        final WordListAdapter adapter = new WordListAdapter(header, wordList, numberOfCharacter);
+        final RecyclerView_WordListAdapter adapter = new RecyclerView_WordListAdapter(header, wordList, numberOfCharacter);
 
         final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -185,10 +185,19 @@ public class SharedFunction {
         String string;
         int wordListSize = wordList.size();
         if (numberOfCharacter == 2 && position < wordListSize-1){
-            string = wordList.get(position) + wordList.get(position+1);
+            string = wordList.get(position) +
+                    wordList.get(position+1);
         }else if (numberOfCharacter == 3 && position < wordListSize-2){
-            string = wordList.get(position) + wordList.get(position+1) + wordList.get(position+2);
-        } else {
+            string = wordList.get(position) +
+                    wordList.get(position+1) +
+                    wordList.get(position+2);
+        } else if (numberOfCharacter == 4 && position < wordListSize-3){
+            string = wordList.get(position) +
+                    wordList.get(position+1) +
+                    wordList.get(position+2) +
+                    wordList.get(position+3);
+        }
+        else {
             string = wordList.get(position);
         }
         return string;

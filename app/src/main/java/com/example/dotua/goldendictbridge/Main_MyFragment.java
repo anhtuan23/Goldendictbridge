@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static com.example.dotua.goldendictbridge.SharedFunction.executeFragmentWordIntent;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.executeFragmentWordIntent;
 
-public class MyFragment extends Fragment {
+public class Main_MyFragment extends Fragment {
 
 
 
-    public MyFragment() {
+    public Main_MyFragment() {
         // Required empty public constructor
     }
 

@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import static com.example.dotua.goldendictbridge.SharedFunction.getDesiredString;
-import static com.example.dotua.goldendictbridge.SharedFunction.sendMessage;
-import static com.example.dotua.goldendictbridge.SharedFunction.showPopupMenu;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.sendMessage;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.showPopupMenu;
 
-public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
+public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerView_TextViewHolder> {
   private static final int ITEM_VIEW_TYPE_HEADER = 0;
   private static final int ITEM_VIEW_TYPE_ITEM = 1;
 
@@ -19,7 +19,7 @@ public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
   private final List<String> words;
   private final int numberOfCharacter;
 
-  public WordListAdapter(View header, List<String> words, int numberOfCharacter) {
+  public RecyclerView_WordListAdapter(View header, List<String> words, int numberOfCharacter) {
     if (header == null) {
       throw new IllegalArgumentException("header may not be null");
     }
@@ -33,16 +33,16 @@ public class WordListAdapter extends RecyclerView.Adapter<TextViewHolder> {
   }
 
   @Override
-  public TextViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public RecyclerView_TextViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (viewType == ITEM_VIEW_TYPE_HEADER) {
-      return new TextViewHolder(header);
+      return new RecyclerView_TextViewHolder(header);
     }
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-    return new TextViewHolder(view);
+    return new RecyclerView_TextViewHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(final TextViewHolder holder, final int position) {
+  public void onBindViewHolder(final RecyclerView_TextViewHolder holder, final int position) {
     if (isHeader(position)) {
       return;
     }

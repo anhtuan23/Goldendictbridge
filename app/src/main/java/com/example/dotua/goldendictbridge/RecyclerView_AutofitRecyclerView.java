@@ -6,21 +6,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-public class AutofitRecyclerView extends RecyclerView {
+public class RecyclerView_AutofitRecyclerView extends RecyclerView {
   private GridLayoutManager manager;
   private int columnWidth = -1;
 
-  public AutofitRecyclerView(Context context) {
+  public RecyclerView_AutofitRecyclerView(Context context) {
     super(context);
     init(context, null);
   }
 
-  public AutofitRecyclerView(Context context, AttributeSet attrs) {
+  public RecyclerView_AutofitRecyclerView(Context context, AttributeSet attrs) {
     super(context, attrs);
     init(context, attrs);
   }
 
-  public AutofitRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+  public RecyclerView_AutofitRecyclerView(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     init(context, attrs);
   }
