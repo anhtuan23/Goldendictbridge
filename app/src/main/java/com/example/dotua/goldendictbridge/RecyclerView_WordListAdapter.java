@@ -37,7 +37,7 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
     if (viewType == ITEM_VIEW_TYPE_HEADER) {
       return new RecyclerView_TextViewHolder(header);
     }
-    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view__item, parent, false);
     return new RecyclerView_TextViewHolder(view);
   }
 

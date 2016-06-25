@@ -102,7 +102,7 @@ public class Main_SharedFunction {
         recyclerView.addItemDecoration(new RecyclerView_MarginDecoration(context));
         recyclerView.setHasFixedSize(true);
 
-        TextView header = (TextView)LayoutInflater.from(context).inflate(R.layout.auto_fit_header, recyclerView, false);
+        TextView header = (TextView)LayoutInflater.from(context).inflate(R.layout.recycler_view__auto_fit_header, recyclerView, false);
         header.setText(receivedWord);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +167,7 @@ public class Main_SharedFunction {
                         v.getContext().startActivity(intent);
                         break;
                     case  R.id.send_to_search_box:
-                        MainActivity.updateSeachViewQuery(sendString);
+                        Main_Activity.updateSeachViewQuery(sendString);
                         break;
                     default:
                         break;

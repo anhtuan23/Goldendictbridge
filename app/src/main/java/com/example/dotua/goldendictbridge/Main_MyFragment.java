@@ -26,7 +26,7 @@ public class Main_MyFragment extends Fragment {
                              Bundle savedInstanceState) {
         int numberOfCharacter = getArguments().getInt(getString(R.string.bundle_key_number_of_character), 1);
 
-        View rootView = inflater.inflate(R.layout.activity_auto_fit_recycler_view, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view__activity_auto_fit, container, false);
 
         executeFragmentWordIntent(getActivity(), rootView, numberOfCharacter);
         return rootView;

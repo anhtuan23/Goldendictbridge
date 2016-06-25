@@ -6,10 +6,8 @@
         <item
             android:id="@+id/nav_night_mode"
             android:icon="@drawable/ic_brightness_3_black_48px"
-            app:actionLayout="@layout/night_mode_switch"
-
+            app:actionLayout="@layout/navigation_drawer_item__night_mode_switch"
             android:title="@string/night_mode"/>
-
     </group>
 
 </menu>

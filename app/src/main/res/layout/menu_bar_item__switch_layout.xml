@@ -9,7 +9,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
-        android:background="@drawable/check_google_translate"
+        android:background="@drawable/menu_bar_item__switch_google_translate"
         android:textOn=""
         android:textOff=""
         android:focusable="false"

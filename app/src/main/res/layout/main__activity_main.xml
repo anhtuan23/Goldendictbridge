@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/activity_main_content"
+        layout="@layout/main__activity_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -20,8 +20,8 @@
         app:itemIconTint="@color/itemIconTint"
         app:itemTextColor="@color/colorText"
         app:itemBackground="@color/colorBackground"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:headerLayout="@layout/navigation_drawer__header_main"
+        app:menu="@menu/navigation_drawer__activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
 

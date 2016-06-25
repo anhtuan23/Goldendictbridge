@@ -21,7 +21,7 @@ import java.util.List;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getWordList;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.newMyFragmentInstance;
 
-public class MainActivity extends NavigationDrawerActivity {
+public class Main_Activity extends NavigationDrawerActivity {
 
     private static Menu mOptionsMenu = null;
     public Menu getMenu(){return mOptionsMenu;}
@@ -81,7 +81,7 @@ public class MainActivity extends NavigationDrawerActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mOptionsMenu = menu;
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        getMenuInflater().inflate(R.menu.main__menu, menu);
 
         MenuItem item = menu.findItem(R.id.my_toggle);
         ToggleButton switchModeToggle= (ToggleButton)item.getActionView().

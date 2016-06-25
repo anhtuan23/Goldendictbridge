@@ -12,7 +12,7 @@
         android:id="@+id/my_toggle"
         android:title=""
         app:showAsAction="always"
-        app:actionLayout="@layout/switch_layout"/>
+        app:actionLayout="@layout/menu_bar_item__switch_layout"/>
 
 
 
