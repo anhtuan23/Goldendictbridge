@@ -35,13 +35,13 @@
                 android:value=".SearchActivity" />
         </activity>
         <!--<activity-->
-            <!--android:name=".GridLayoutAutoFitHeaderActivity"-->
-            <!--android:label="Grid"-->
-            <!--android:parentActivityName=".MainActivity"-->
+            <!--android:name=".WordHistory_Main"-->
+            <!--android:label="History"-->
+            <!--android:parentActivityName=".Main_Activity"-->
             <!--android:theme="@style/AppTheme">-->
             <!--<meta-data-->
                 <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value="com.example.dotua.goldendictbridge.GridLayoutAutoFitHeaderActivity" />-->
+                <!--android:value=".WordHistory_Main" />-->
         <!--</activity>-->
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

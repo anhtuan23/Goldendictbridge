@@ -38,6 +38,7 @@ public class Main_SharedFunction {
         editor.putString(context.getString(R.string.pref_latest_sent_string), word);
         editor.apply();
 
+
         //CAUTION: the switch is not bind to sharedPreference
         boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
         if (b) {
@@ -53,19 +54,25 @@ public class Main_SharedFunction {
         }
     }
 
-    public static  void getWordList(Context context, Intent intent){
+    public static int getWordList(Context context, Intent intent){
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
             Uri data = intent.getData();
             List<String> params = data.getPathSegments();
             receivedWord = params.get(0);
-            if (receivedWord.equals(""))
+            if (receivedWord.equals("")) {
                 receivedWord = "Bonjour";
+            } else {
+                Database_InsertTask insertTask = new Database_InsertTask(context);
+                insertTask.execute(receivedWord);
+            }
         } else if (Intent.ACTION_SEND.equals(action)) {
             String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
             if (sharedText != null) {
                 receivedWord = sharedText;
+                Database_InsertTask insertTask = new Database_InsertTask(context);
+                insertTask.execute(receivedWord);
             } else {
                 receivedWord = "Bonjour";
             }
@@ -73,9 +80,13 @@ public class Main_SharedFunction {
             String sharedText = intent.getStringExtra(SearchManager.QUERY);
             if (sharedText != null) {
                 receivedWord = sharedText;
+                Database_InsertTask insertTask = new Database_InsertTask(context);
+                insertTask.execute(receivedWord);
             } else {
                 receivedWord = "Bonjour";
             }
+        } else if (Intent.ACTION_MAIN.equals(action)){
+
         }
 
         wordList = new ArrayList<>();
@@ -93,6 +104,7 @@ public class Main_SharedFunction {
                 !wordList.get(0).equals(" ") ) {
             sendMessage(context, receivedWord);
         }
+        return 1;
     }
 
     public static void executeFragmentWordIntent (final Context context,
@@ -167,7 +179,7 @@ public class Main_SharedFunction {
                         v.getContext().startActivity(intent);
                         break;
                     case  R.id.send_to_search_box:
-                        Main_Activity.updateSeachViewQuery(sendString);
+                        Main_Activity.updateSearchViewQuery(sendString);
                         break;
                     default:
                         break;
@@ -202,6 +214,8 @@ public class Main_SharedFunction {
         }
         return string;
     }
+
+
 }
 
 

@@ -39,14 +39,15 @@ public class Main_Activity extends NavigationDrawerActivity {
         getWordList(this,this.getIntent());
     }
 
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new WordHistory_Fragment(),"HISTORY");
         adapter.addFragment(newMyFragmentInstance(this, 1), "ONE");
         adapter.addFragment(newMyFragmentInstance(this, 2), "TWO");
         adapter.addFragment(newMyFragmentInstance(this, 3), "THREE");
         adapter.addFragment(newMyFragmentInstance(this, 4), "FOUR");
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -120,7 +121,7 @@ public class Main_Activity extends NavigationDrawerActivity {
         return true;
     }
 
-    public static void updateSeachViewQuery(String query) {
+    public static void updateSearchViewQuery(String query) {
         SearchView searchView =
                 (SearchView) mOptionsMenu.findItem(R.id.search).getActionView();
         searchView.setQuery(query, false);

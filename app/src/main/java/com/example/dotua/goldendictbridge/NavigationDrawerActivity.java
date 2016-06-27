@@ -16,6 +16,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.CompoundButton;
 
 import com.google.android.gms.appindexing.Action;
@@ -40,9 +41,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main__activity_main);
+
+        ViewStub viewStub = (ViewStub) findViewById(R.id.stub_import);
+        viewStub.setLayoutResource(R.layout.main__activity_main_content);
+        viewStub.inflate();
+
         //Setup Navigation Drawer
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -159,6 +164,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
             View actionLayout = MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_night_mode));
             SwitchCompat mNightModeSwitch = (SwitchCompat) actionLayout.findViewById(R.id.switch_compat);
             mNightModeSwitch.performClick();
+        } else if (id == R.id.nav_history){
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
