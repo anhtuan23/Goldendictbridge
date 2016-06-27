@@ -5,31 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main_SharedFunction {
-    private  static List<String> wordList;
+    private static List<String> wordList;
     private static String receivedWord = "明天更残酷";
 
-    public static Main_MyFragment newMyFragmentInstance(Context context, int numberOfCharacter) {
-        Main_MyFragment myFragment = new Main_MyFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(context.getString(R.string.bundle_key_number_of_character), numberOfCharacter);
-        myFragment.setArguments(args);
-
-        return myFragment;
-    }
+    public static List<String> getWordList() {return wordList;}
+    public static void setWordList(List<String> wordList) {Main_SharedFunction.wordList = wordList;}
+    public static String getReceivedWord() {return receivedWord;}
+    public static void setReceivedWord(String receivedWord) {Main_SharedFunction.receivedWord = receivedWord;}
 
     public static void sendMessage(Context context, String word) {
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -54,7 +44,7 @@ public class Main_SharedFunction {
         }
     }
 
-    public static int getWordList(Context context, Intent intent){
+    public static int generateWordList(Context context, Intent intent){
         String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -105,42 +95,6 @@ public class Main_SharedFunction {
             sendMessage(context, receivedWord);
         }
         return 1;
-    }
-
-    public static void executeFragmentWordIntent (final Context context,
-                                                  View rootView,
-                                                  int numberOfCharacter){
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        recyclerView.addItemDecoration(new RecyclerView_MarginDecoration(context));
-        recyclerView.setHasFixedSize(true);
-
-        TextView header = (TextView)LayoutInflater.from(context).inflate(R.layout.recycler_view__auto_fit_header, recyclerView, false);
-        header.setText(receivedWord);
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage(context, ((TextView)v).getText().toString());
-            }
-        });
-        header.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v) {
-                showPopupMenu(v, ((TextView)v).getText().toString());
-                return true;
-            }
-        });
-
-        final RecyclerView_WordListAdapter adapter = new RecyclerView_WordListAdapter(header, wordList, numberOfCharacter);
-
-        final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return adapter.isHeader(position) ? manager.getSpanCount() : 1;
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
     }
 
     public static void showPopupMenu (final View v, final String sendString){

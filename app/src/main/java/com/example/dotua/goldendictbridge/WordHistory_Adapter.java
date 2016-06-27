@@ -12,8 +12,7 @@ import java.util.List;
  * Created by dotua on 26-Jun-16.
  */
 public class WordHistory_Adapter extends RecyclerView.Adapter<WordHistory_Adapter.ViewHolder> {
-    private List<String> mDataset;
-    public final static String EXTRA_MESSAGE = "com.example.dotua.goldendictbridge.WORD_HISTORY_MESSAGE";
+    private List<String> mDataSet;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -27,9 +26,9 @@ public class WordHistory_Adapter extends RecyclerView.Adapter<WordHistory_Adapte
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public WordHistory_Adapter(List<String> myDataset) {
-        mDataset = myDataset;
+    // Provide a suitable constructor (depends on the kind of dataSet)
+    public WordHistory_Adapter(List<String> myDataSet) {
+        mDataSet = myDataSet;
     }
 
     // Create new views (invoked by the layout manager)
@@ -41,8 +40,7 @@ public class WordHistory_Adapter extends RecyclerView.Adapter<WordHistory_Adapte
                 .inflate(R.layout.word_history__textview_item, parent, false);
         // set the view's size, margins, paddings and layout parameters
         //...
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -50,7 +48,7 @@ public class WordHistory_Adapter extends RecyclerView.Adapter<WordHistory_Adapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String holderText = mDataset.get(position);
+        final String holderText = mDataSet.get(position);
         holder.mTextView.setText(holderText);
 
         holder.mTextView.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +63,10 @@ public class WordHistory_Adapter extends RecyclerView.Adapter<WordHistory_Adapte
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mDataSet.size();
     }
 
     public void updateDataSet(List<String> newList){
-        mDataset = newList;
+        mDataSet = newList;
     }
 }

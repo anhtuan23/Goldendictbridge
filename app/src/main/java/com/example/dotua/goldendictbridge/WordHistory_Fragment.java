@@ -30,7 +30,7 @@ public class WordHistory_Fragment extends Fragment {
         // specify an adapter (see also next example)
 
         List<String> daset = new ArrayList<>();
-        for (int i =1; i<100; i++){
+        for (int i =1; i<=5; i++){
             daset.add(String.valueOf(i));
         }
 
