@@ -13,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -29,13 +30,17 @@ public class Main_Activity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        Main_CustomViewPager viewPager = (Main_CustomViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
+        viewPager.setPagingEnabled(false);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
+
+        TextView textView = (TextView) findViewById(R.id.direct_translate);
+        textView.setText("Yandex");
+        textView.notify();
     }
 
     private void setupViewPager(ViewPager viewPager) {

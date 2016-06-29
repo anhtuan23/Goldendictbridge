@@ -21,21 +21,27 @@ public class Main_SharedFunction {
     public static String getReceivedWord() {return receivedWord;}
     public static void setReceivedWord(String receivedWord) {Main_SharedFunction.receivedWord = receivedWord;}
 
-    public static void sendMessage(Context context, String word) {
+    public static void sendMessage(Context context, String word, int actionSendOrDict12) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(context.getString(R.string.pref_latest_sent_string), word);
         editor.apply();
-
-
         //CAUTION: the switch is not bind to sharedPreference
-        boolean b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
+        boolean b;
+        if (actionSendOrDict12 == R.integer.action_send){
+            b = true;
+        } else if (actionSendOrDict12 == R.integer.action_dictionary){
+            b = false;
+        } else {
+            b = sharedPref.getBoolean(context.getString(R.string.pref_share_mode_key), false);
+        }
         if (b) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, word);
             sendIntent.setType("text/plain");
+            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
             context.startActivity(sendIntent);
         } else {
             Intent intent = new Intent("colordict.intent.action.SEARCH");
@@ -92,7 +98,7 @@ public class Main_SharedFunction {
         if (!receivedWord.equals(latestEntry) &&
                 wordList.size() <= 2 &&
                 !wordList.get(0).equals(" ") ) {
-            sendMessage(context, receivedWord);
+            sendMessage(context, receivedWord, R.integer.action_not_defined);
         }
         return 1;
     }

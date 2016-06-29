@@ -1,7 +1,8 @@
 package com.example.dotua.goldendictbridge;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,12 +35,24 @@ public class WordHistory_Fragment extends Fragment {
             daset.add(String.valueOf(i));
         }
 
-        WordHistory_Adapter mAdapter = new WordHistory_Adapter(daset);
+        final WordHistory_Adapter mAdapter = new WordHistory_Adapter(daset);
         recyclerView.setAdapter(mAdapter);
-        Database_QueryTask queryTask = new Database_QueryTask(this.getContext());
+        final Database_QueryTask queryTask = new Database_QueryTask(this.getContext());
         queryTask.execute(mAdapter);
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Database_QueryTask queryTask = new Database_QueryTask(swipeRefreshLayout.getContext());
+                queryTask.execute(mAdapter);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         return rootView;
     }
+
 }
 
