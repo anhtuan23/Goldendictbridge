@@ -44,7 +44,10 @@
         <TextView
             android:id="@+id/direct_translate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textStyle="bold"/>
     </android.support.v7.widget.CardView>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -20,11 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dotua.goldendictbridge.Main_MyFragment.newMyFragmentInstance;
+import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
 
 public class Main_Activity extends NavigationDrawerActivity {
 
     private static Menu mOptionsMenu = null;
     public Menu getMenu(){return mOptionsMenu;}
+    private static TextView directTranslateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,12 @@ public class Main_Activity extends NavigationDrawerActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        directTranslateTextView = (TextView) findViewById(R.id.direct_translate);
+
         Main_SharedFunction.generateWordList(this,this.getIntent());
 
-        TextView textView = (TextView) findViewById(R.id.direct_translate);
-        textView.setText("Yandex");
-        textView.notify();
+        DirectTranslate_Task directTranslate_task = new DirectTranslate_Task();
+        directTranslate_task.execute(getReceivedWord());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -132,5 +135,7 @@ public class Main_Activity extends NavigationDrawerActivity {
         searchView.setIconified(false);
     }
 
-
+    public static void changeDirectTranslateEditText (String translatedText){
+        directTranslateTextView.setText(translatedText);
+    }
 }
