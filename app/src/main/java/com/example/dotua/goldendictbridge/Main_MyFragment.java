@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getWordList;
@@ -61,7 +62,10 @@ public class Main_MyFragment extends Fragment {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(context, ((TextView)v).getText().toString(),R.integer.action_not_defined);
+                DirectTranslate_Task directTranslate_task = new DirectTranslate_Task();
+                directTranslate_task.execute(getReceivedWord());
+
+                resetCardViewPosition();
             }
         });
         header.setOnLongClickListener(new View.OnLongClickListener(){

@@ -9,15 +9,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.grantland.widget.AutofitTextView;
 
 import static com.example.dotua.goldendictbridge.Main_MyFragment.newMyFragmentInstance;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
@@ -26,7 +28,8 @@ public class Main_Activity extends NavigationDrawerActivity {
 
     private static Menu mOptionsMenu = null;
     public Menu getMenu(){return mOptionsMenu;}
-    private static TextView directTranslateTextView;
+    private static AutofitTextView directTranslateTextView;
+    private static CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,8 @@ public class Main_Activity extends NavigationDrawerActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        directTranslateTextView = (TextView) findViewById(R.id.direct_translate);
+        cardView = (CardView)findViewById(R.id.card_view) ;
+        directTranslateTextView = (AutofitTextView) findViewById(R.id.direct_translate);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
 
@@ -135,7 +139,11 @@ public class Main_Activity extends NavigationDrawerActivity {
         searchView.setIconified(false);
     }
 
-    public static void changeDirectTranslateEditText (String translatedText){
+    public static void changeDirectTranslateAutoFitTextView(String translatedText){
         directTranslateTextView.setText(translatedText);
+    }
+
+    public static void resetCardViewPosition(){
+        cardView.setTranslationY(0);
     }
 }
