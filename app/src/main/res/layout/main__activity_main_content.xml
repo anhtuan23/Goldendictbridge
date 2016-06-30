@@ -46,6 +46,8 @@
             android:id="@+id/direct_translate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorCardBackground"
+            android:textColor="@color/colorText"
             android:maxLines="5"
             android:singleLine="false"
             android:textSize="42sp"

@@ -24,6 +24,15 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
     private final String API_KEY = "trnsl.1.1.20160628T114419Z.f94e02590b8527ee.cc30b2d8978d8c309a95ff05f53c05d2ceaaf214";
     private final String LANGUAGE_CHINESE_ENGLSIH = "zh-en";
     private String LOG_TAG = DirectTranslate_Task.class.getSimpleName();
+    private String NO_INTERNET_CONNECTION = "No internet connection.";
+    private String CANNOT_FIND_RESULT = "Cannot find result.";
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        changeDirectTranslateAutoFitTextView("Retrieving result ...");
+    }
+
     @Override
     protected String doInBackground(String... params) {
         // If there's no zip code, there's nothing to look up.  Verify size of params.
@@ -68,7 +77,7 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 // Nothing to do.
-                return null;
+                return CANNOT_FIND_RESULT;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -82,14 +91,14 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
 
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
-                return null;
+                return CANNOT_FIND_RESULT;
             }
             rawJsonString = buffer.toString();
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
-            return null;
+            return NO_INTERNET_CONNECTION;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -110,7 +119,7 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
             e.printStackTrace();
         }
         // This will only happen if there was an error getting or parsing the forecast.
-        return null;
+        return CANNOT_FIND_RESULT;
     }
 
     private String getWeatherDataFromJson (String forecastJsonStr)
