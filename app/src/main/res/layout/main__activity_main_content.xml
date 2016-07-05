@@ -31,29 +31,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_gravity="bottom"
-        android:layout_margin="8dp"
-        android:layout_width="400dp"
-        android:layout_height="100dp"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation = "12dp"
-        app:layout_behavior="com.example.dotua.goldendictbridge.DirectTranslate_ScrollingCardViewBehavior">
-
-        <me.grantland.widget.AutofitTextView
-            android:id="@+id/direct_translate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorCardBackground"
-            android:textColor="@color/colorText"
-            android:maxLines="5"
-            android:singleLine="false"
-            android:textSize="42sp"
-            android:gravity="center"
-            autofit:minTextSize="3sp" />
-    </android.support.v7.widget.CardView>
+    <include layout="@layout/direct_translate__cardview"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

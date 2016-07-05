@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
@@ -126,7 +125,7 @@ public class Main_MyFragment extends Fragment {
 //                RecyclerView_TextViewHolder rTVH = (RecyclerView_TextViewHolder) viewHolder;
                 if (direction == ItemTouchHelper.LEFT){
 //                    adapter.removeItem(position);
-                    Toast.makeText(getContext(), "Up", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Up", Toast.LENGTH_SHORT).show();
                     sendMessage(getContext(), sendString,R.integer.action_send);
                 } else {
 //                    removeView();
@@ -134,7 +133,7 @@ public class Main_MyFragment extends Fragment {
 //                    alertDialog.setTitle("Edit Country");
 //                    et_country.setText(countries.get(position));
 //                    alertDialog.show();
-                    Toast.makeText(getContext(), "Down", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Down", Toast.LENGTH_SHORT).show();
                     sendMessage(getContext(), sendString,R.integer.action_dictionary);
                 }
             }
