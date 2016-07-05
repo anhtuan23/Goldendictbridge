@@ -8,8 +8,7 @@
     android:layout_gravity="bottom"
     android:layout_margin="14dp"
     android:layout_width="380dp"
-    android:layout_height="300dp"
-    card_view:cardCornerRadius="4dp"
+    android:layout_height="270dp"
     card_view:cardElevation="12dp"
     app:layout_behavior="com.example.dotua.goldendictbridge.DirectTranslate_ScrollingCardViewBehavior">
 
@@ -29,26 +28,27 @@
         <me.grantland.widget.AutofitTextView
             android:id="@+id/direct_translate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
             android:layout_below="@id/thumbnail"
-            android:padding="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:background="@color/colorCardBackground"
             android:textColor="@color/colorText"
-            android:maxLines="5"
+            android:maxLines="4"
             android:singleLine="false"
-            android:textSize="20sp"
+            android:textSize="48sp"
             android:gravity="center"
             autofit:minTextSize="3sp" />
 
-        <ImageView
-            android:id="@+id/overflow"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/thumbnail"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_dots" />
+        <!--<ImageView-->
+            <!--android:id="@+id/overflow"-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@id/thumbnail"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/ic_dots" />-->
 
     </RelativeLayout>
 

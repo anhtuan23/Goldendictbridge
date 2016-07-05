@@ -64,12 +64,17 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
             final String IMG_SIZE = "imgSize";
             final String NUMBER_OF_RESULTS = "num";
             final String RETURN_FORMAT = "alt";
+            final String COLOR_TYPE = "imgColorType";
+            final String IMG_TYPE = "imgType";
+
 
             String searchType = "image";
             String fileType = "jpg";
             String imgSize = "medium";
             String numberOfResults = "1";
             String returnFormat = "json";
+            String imgColorType = "color";
+            String imgType = "photo";
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                     .appendQueryParameter(SERVER_KEY, SERVER_KEY_ID)
@@ -80,6 +85,8 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
                     .appendQueryParameter(IMG_SIZE, imgSize)
                     .appendQueryParameter(NUMBER_OF_RESULTS, numberOfResults)
                     .appendQueryParameter(RETURN_FORMAT, returnFormat)
+                    .appendQueryParameter(COLOR_TYPE, imgColorType)
+                    .appendQueryParameter(IMG_TYPE, imgType)
                     .build();
 
             URL url = new URL(builtUri.toString());

@@ -3,6 +3,7 @@ package com.example.dotua.goldendictbridge;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
@@ -166,7 +166,7 @@ public class Main_Activity extends NavigationDrawerActivity {
                     }
                 }
         );
-        directTranslate_getImageTask.execute(query);
+        directTranslate_getImageTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,query);
     }
 
     public static void resetCardViewPosition(){
