@@ -14,7 +14,11 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ public class Main_Activity extends NavigationDrawerActivity {
     public Menu getMenu(){return mOptionsMenu;}
     private static AutofitTextView directTranslateTextView;
     private static CardView cardView;
+    private  static ImageView imageView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +50,13 @@ public class Main_Activity extends NavigationDrawerActivity {
 
         cardView = (CardView)findViewById(R.id.card_view) ;
         directTranslateTextView = (AutofitTextView) findViewById(R.id.direct_translate);
+        imageView = (ImageView) findViewById(R.id.thumbnail);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
 
-        DirectTranslate_Task directTranslate_task = new DirectTranslate_Task();
-        directTranslate_task.execute(getReceivedWord());
+        String receivedWord = getReceivedWord();
+        new DirectTranslate_Task().execute(receivedWord);
+        changeDirectTranslateImageView(receivedWord);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -141,6 +150,23 @@ public class Main_Activity extends NavigationDrawerActivity {
 
     public static void changeDirectTranslateAutoFitTextView(String translatedText){
         directTranslateTextView.setText(translatedText);
+    }
+
+    public static void changeDirectTranslateImageView(String query){
+        DirectTranslate_GetImageTask directTranslate_getImageTask = new DirectTranslate_GetImageTask(
+                new DirectTranslate_GetImageTask.AsyncResponse(){
+                    @Override
+                    public void processFinish(String imageUrl){
+//                        Toast.makeText(imageView.getContext(), imageUrl, Toast.LENGTH_SHORT).show();
+                        Picasso.with(imageView.getContext())
+                                .load(imageUrl)
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.error)
+                                .into(imageView);
+                    }
+                }
+        );
+        directTranslate_getImageTask.execute(query);
     }
 
     public static void resetCardViewPosition(){

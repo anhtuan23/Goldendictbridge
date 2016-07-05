@@ -15,22 +15,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTranslateAutoFitTextView;
-
 /**
  * Created by dotua on 29-Jun-16.
  */
-public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
-    private final String API_KEY = "trnsl.1.1.20160628T114419Z.f94e02590b8527ee.cc30b2d8978d8c309a95ff05f53c05d2ceaaf214";
-    private final String LANGUAGE_CHINESE_ENGLSIH = "zh-en";
+public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String> {
+    private final String CUSTOM_SEARCH_ID = "004751125689537977935:7fpfquvojn0";
+    private final String SERVER_KEY_ID = "AIzaSyCilOcsqmPP5Rkucxv8GpucQmjzffBhwL4";
+
     private String LOG_TAG = DirectTranslate_GetImageTask.class.getSimpleName();
     private String NO_INTERNET_CONNECTION = "No internet connection.";
     private String CANNOT_FIND_RESULT = "Cannot find result.";
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        changeDirectTranslateAutoFitTextView("Retrieving result ...");
+    public interface AsyncResponse {
+        void processFinish(String output);
+    }
+
+    public AsyncResponse delegate = null;
+
+    public DirectTranslate_GetImageTask(AsyncResponse delegate){
+        this.delegate = delegate;
     }
 
     @Override
@@ -52,15 +55,31 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
             // Possible parameters are avaiable at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
             final String BASE_URL =
-                    "https://translate.yandex.net/api/v1.5/tr.json/translate?";
-            final String QUERY_API_KEY = "key";
-            final String QUERY_SOURCE_TEXT = "text";
-            final String QUERY_ANGUAGE = "lang";
+                    "https://www.googleapis.com/customsearch/v1?";
+            final String SERVER_KEY = "key";
+            final String CUSTOM_SEARCH = "cx";
+            final String QUERY_TEXT = "q";
+            final String SEACH_TYPE = "searchType";
+            final String FILE_TYPE = "fileType";
+            final String IMG_SIZE = "imgSize";
+            final String NUMBER_OF_RESULTS = "num";
+            final String RETURN_FORMAT = "alt";
+
+            String searchType = "image";
+            String fileType = "jpg";
+            String imgSize = "medium";
+            String numberOfResults = "1";
+            String returnFormat = "json";
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_API_KEY, API_KEY)
-                    .appendQueryParameter(QUERY_SOURCE_TEXT, params[0])
-                    .appendQueryParameter(QUERY_ANGUAGE, LANGUAGE_CHINESE_ENGLSIH)
+                    .appendQueryParameter(SERVER_KEY, SERVER_KEY_ID)
+                    .appendQueryParameter(CUSTOM_SEARCH, CUSTOM_SEARCH_ID)
+                    .appendQueryParameter(QUERY_TEXT, params[0])
+                    .appendQueryParameter(SEACH_TYPE, searchType)
+                    .appendQueryParameter(FILE_TYPE, fileType)
+                    .appendQueryParameter(IMG_SIZE, imgSize)
+                    .appendQueryParameter(NUMBER_OF_RESULTS, numberOfResults)
+                    .appendQueryParameter(RETURN_FORMAT, returnFormat)
                     .build();
 
             URL url = new URL(builtUri.toString());
@@ -111,7 +130,7 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
         }
 
         try {
-            return getWeatherDataFromJson(rawJsonString);
+            return getImageUrlFromJson(rawJsonString);
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -120,24 +139,24 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
         return CANNOT_FIND_RESULT;
     }
 
-    private String getWeatherDataFromJson (String forecastJsonStr)
+    private String getImageUrlFromJson(String returnJsonStr)
             throws JSONException {
 
-//        final String OWM_CODE = "code";
-//        final String OWM_LANG = "lang";
-        final String OWM_TEXT = "text";
+        final String OWM_ITEMS = "items";
+        final String OWM_LNK = "link";
 
-        JSONObject translatedTextJson = new JSONObject(forecastJsonStr);
-        JSONArray translatedTextArray = translatedTextJson.getJSONArray(OWM_TEXT);
+        JSONObject resultJson = new JSONObject(returnJsonStr);
+        JSONArray resultArray = resultJson.getJSONArray(OWM_ITEMS);
+        JSONObject firstResult = resultArray.getJSONObject(0);
 
-        String translatedText = translatedTextArray.getString(0);
+        String imageUrl = firstResult.getString(OWM_LNK);
 
-        return translatedText;
+        return imageUrl;
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        changeDirectTranslateAutoFitTextView(s);
+        delegate.processFinish(s);
     }
 }
