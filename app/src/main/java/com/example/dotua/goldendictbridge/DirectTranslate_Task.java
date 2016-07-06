@@ -20,7 +20,7 @@ import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTrans
 /**
  * Created by dotua on 29-Jun-16.
  */
-public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
+public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     private final String API_KEY = "trnsl.1.1.20160628T114419Z.f94e02590b8527ee.cc30b2d8978d8c309a95ff05f53c05d2ceaaf214";
     private final String LANGUAGE_CHINESE_ENGLSIH = "zh-en";
     private String LOG_TAG = DirectTranslate_GetImageTask.class.getSimpleName();
@@ -28,9 +28,9 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
     private String CANNOT_FIND_RESULT = "Cannot find result.";
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        changeDirectTranslateAutoFitTextView("Retrieving result ...");
+    protected void onProgressUpdate(String... values) {
+        super.onProgressUpdate(values);
+        changeDirectTranslateAutoFitTextView("Translating "+ values[0]);
     }
 
     @Override
@@ -39,6 +39,7 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
         if (params.length == 0) {
             return null;
         }
+        publishProgress(params[0]);
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
@@ -67,6 +68,8 @@ public class DirectTranslate_Task extends AsyncTask<String,Void, String> {
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(4000);
+            urlConnection.setReadTimeout(5000);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 

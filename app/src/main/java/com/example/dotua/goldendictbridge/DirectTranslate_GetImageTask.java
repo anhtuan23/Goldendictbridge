@@ -66,6 +66,8 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
             final String RETURN_FORMAT = "alt";
             final String COLOR_TYPE = "imgColorType";
             final String IMG_TYPE = "imgType";
+            final String GEO_LOCATION = "gl";
+            final String GOOGLE_HOST = "googlehost";
 
 
             String searchType = "image";
@@ -75,6 +77,8 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
             String returnFormat = "json";
             String imgColorType = "color";
             String imgType = "photo";
+            String geoLocation = "vn";
+            String googleHost = "google.com.vn";
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                     .appendQueryParameter(SERVER_KEY, SERVER_KEY_ID)
@@ -87,6 +91,8 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
                     .appendQueryParameter(RETURN_FORMAT, returnFormat)
                     .appendQueryParameter(COLOR_TYPE, imgColorType)
                     .appendQueryParameter(IMG_TYPE, imgType)
+                    .appendQueryParameter(GEO_LOCATION, geoLocation)
+                    .appendQueryParameter(GOOGLE_HOST, googleHost)
                     .build();
 
             URL url = new URL(builtUri.toString());

@@ -20,9 +20,8 @@
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:clickable="true"
             android:scaleType="centerCrop"
-            />
+            android:background="@drawable/background2"/>
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/direct_translate"

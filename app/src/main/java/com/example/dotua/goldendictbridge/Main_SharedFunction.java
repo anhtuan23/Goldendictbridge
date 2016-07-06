@@ -7,14 +7,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.dotua.goldendictbridge.Database_WordHistoryDbHelper.executeInsertTask;
 
 public class Main_SharedFunction {
     private static List<String> wordList;
@@ -64,15 +62,13 @@ public class Main_SharedFunction {
             if (receivedWord.equals("")) {
                 receivedWord = "Bonjour";
             } else {
-                Database_InsertTask insertTask = new Database_InsertTask(context);
-                insertTask.execute(receivedWord);
+                executeInsertTask(context, receivedWord);
             }
         } else if (Intent.ACTION_SEND.equals(action)) {
             String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
             if (sharedText != null) {
                 receivedWord = sharedText;
-                Database_InsertTask insertTask = new Database_InsertTask(context);
-                insertTask.execute(receivedWord);
+                executeInsertTask(context, receivedWord);
             } else {
                 receivedWord = "Bonjour";
             }
@@ -80,8 +76,7 @@ public class Main_SharedFunction {
             String sharedText = intent.getStringExtra(SearchManager.QUERY);
             if (sharedText != null) {
                 receivedWord = sharedText;
-                Database_InsertTask insertTask = new Database_InsertTask(context);
-                insertTask.execute(receivedWord);
+                executeInsertTask(context, receivedWord);
             } else {
                 receivedWord = "Bonjour";
             }

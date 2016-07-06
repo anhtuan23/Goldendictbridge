@@ -53,10 +53,6 @@ public class Main_Activity extends NavigationDrawerActivity {
         imageView = (ImageView) findViewById(R.id.thumbnail);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
-
-        String receivedWord = getReceivedWord();
-        new DirectTranslate_Task().execute(receivedWord);
-        changeDirectTranslateImageView(receivedWord);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -65,7 +61,7 @@ public class Main_Activity extends NavigationDrawerActivity {
         adapter.addFragment(newMyFragmentInstance(this, 1), "ONE");
         adapter.addFragment(newMyFragmentInstance(this, 2), "TWO");
         adapter.addFragment(newMyFragmentInstance(this, 3), "THREE");
-        adapter.addFragment(newMyFragmentInstance(this, 4), "FOUR");
+//        adapter.addFragment(newMyFragmentInstance(this, 4), "FOUR");
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
     }
@@ -141,6 +137,14 @@ public class Main_Activity extends NavigationDrawerActivity {
         return true;
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        String receivedWord = getReceivedWord();
+        executeDirectTranslateTask(receivedWord);
+        executeDirectTranslateImageView(receivedWord);
+    }
+
     public static void updateSearchViewQuery(String query) {
         SearchView searchView =
                 (SearchView) mOptionsMenu.findItem(R.id.search).getActionView();
@@ -152,7 +156,12 @@ public class Main_Activity extends NavigationDrawerActivity {
         directTranslateTextView.setText(translatedText);
     }
 
-    public static void changeDirectTranslateImageView(String query){
+    public static void executeDirectTranslateTask(String string){
+        DirectTranslate_Task directTranslate_Task = new DirectTranslate_Task();
+        directTranslate_Task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, string);
+    }
+
+    public static void executeDirectTranslateImageView(String query){
         DirectTranslate_GetImageTask directTranslate_getImageTask = new DirectTranslate_GetImageTask(
                 new DirectTranslate_GetImageTask.AsyncResponse(){
                     @Override
@@ -166,6 +175,7 @@ public class Main_Activity extends NavigationDrawerActivity {
                     }
                 }
         );
+//        directTranslate_getImageTask.execute(query);
         directTranslate_getImageTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,query);
     }
 

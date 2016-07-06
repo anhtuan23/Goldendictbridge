@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTranslateImageView;
+import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
+import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.showPopupMenu;
@@ -55,9 +56,8 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
       @Override
       public void onClick(View v) {
 //        sendMessage(v.getContext(), sendString,R.integer.action_not_defined);
-        DirectTranslate_Task directTranslate_task = new DirectTranslate_Task();
-        directTranslate_task.execute(sendString);
-        changeDirectTranslateImageView(sendString);
+        executeDirectTranslateTask(sendString);
+        executeDirectTranslateImageView(sendString);
         resetCardViewPosition();
       }
     });

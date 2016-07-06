@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.dotua.goldendictbridge.Database_WordHistoryDbHelper.executeQueryTask;
+
 public class WordHistory_Fragment extends Fragment {
 
     public WordHistory_Fragment (){}
@@ -37,15 +39,13 @@ public class WordHistory_Fragment extends Fragment {
 
         final WordHistory_Adapter mAdapter = new WordHistory_Adapter(daset);
         recyclerView.setAdapter(mAdapter);
-        final Database_QueryTask queryTask = new Database_QueryTask(this.getContext());
-        queryTask.execute(mAdapter);
+        executeQueryTask(this.getContext(), mAdapter);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Database_QueryTask queryTask = new Database_QueryTask(swipeRefreshLayout.getContext());
-                queryTask.execute(mAdapter);
+                executeQueryTask(swipeRefreshLayout.getContext(), mAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

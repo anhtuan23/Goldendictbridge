@@ -42,4 +42,14 @@ public class Database_WordHistoryDbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
+    public static void executeInsertTask(Context context, String receivedWord){
+        Database_InsertTask insertTask = new Database_InsertTask(context);
+        insertTask.execute(receivedWord);
+    }
+
+    public static void executeQueryTask(Context context, WordHistory_Adapter mAdapter){
+        Database_QueryTask queryTask = new Database_QueryTask(context);
+        queryTask.execute(mAdapter);
+    }
 }

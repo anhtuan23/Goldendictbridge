@@ -12,7 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTranslateImageView;
+import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
+import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
@@ -63,9 +64,8 @@ public class Main_MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String sendString = getReceivedWord();
-                DirectTranslate_Task directTranslate_task = new DirectTranslate_Task();
-                directTranslate_task.execute(sendString);
-                changeDirectTranslateImageView(sendString);
+                executeDirectTranslateTask(sendString);
+                executeDirectTranslateImageView(sendString);
                 resetCardViewPosition();
             }
         });
