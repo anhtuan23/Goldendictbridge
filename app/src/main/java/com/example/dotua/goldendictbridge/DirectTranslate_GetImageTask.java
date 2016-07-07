@@ -14,17 +14,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * Created by dotua on 29-Jun-16.
  */
 public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String> {
     private final String CUSTOM_SEARCH_ID = "004751125689537977935:7fpfquvojn0";
-    private final String SERVER_KEY_ID = "AIzaSyCilOcsqmPP5Rkucxv8GpucQmjzffBhwL4";
+    private final String SERVER_KEY_ID_1_GET_IMAGE = "AIzaSyCilOcsqmPP5Rkucxv8GpucQmjzffBhwL4";
+    private final String SERVER_KEY_ID_2_GET_2 = "AIzaSyDlIFn0d_9Dn6OLrr8fKGyj0rs2lqU02jw";
+    private final String SERVER_KEY_ID_3_GET_3 = "AIzaSyAHXYv4351KQkQE_pJy8fYeWvvKpCPMkdY";
 
     private String LOG_TAG = DirectTranslate_GetImageTask.class.getSimpleName();
-    private String NO_INTERNET_CONNECTION = "No internet connection.";
-    private String CANNOT_FIND_RESULT = "Cannot find result.";
+    private String NO_INTERNET_CONNECTION = "http://lorempixel.com/200/200/";
+    private String CANNOT_FIND_RESULT = "http://lorempixel.com/200/200/";
 
     public interface AsyncResponse {
         void processFinish(String output);
@@ -68,7 +71,7 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
             final String IMG_TYPE = "imgType";
             final String GEO_LOCATION = "gl";
             final String GOOGLE_HOST = "googlehost";
-
+            final String COUNTRY = "cr";
 
             String searchType = "image";
             String fileType = "jpg";
@@ -79,9 +82,25 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
             String imgType = "photo";
             String geoLocation = "vn";
             String googleHost = "google.com.vn";
+            String country = "countryVN";
+
+            String apiKey;
+            Random r = new Random();
+            int randomApiKey = r.nextInt(3) + 1;
+            switch (randomApiKey){
+                case 1:
+                    apiKey = SERVER_KEY_ID_1_GET_IMAGE;
+                    break;
+                case 2:
+                    apiKey = SERVER_KEY_ID_2_GET_2;
+                    break;
+                default:
+                    apiKey = SERVER_KEY_ID_3_GET_3;
+                    break;
+            }
 
             Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendQueryParameter(SERVER_KEY, SERVER_KEY_ID)
+                    .appendQueryParameter(SERVER_KEY, apiKey)
                     .appendQueryParameter(CUSTOM_SEARCH, CUSTOM_SEARCH_ID)
                     .appendQueryParameter(QUERY_TEXT, params[0])
                     .appendQueryParameter(SEACH_TYPE, searchType)
@@ -93,12 +112,15 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
                     .appendQueryParameter(IMG_TYPE, imgType)
                     .appendQueryParameter(GEO_LOCATION, geoLocation)
                     .appendQueryParameter(GOOGLE_HOST, googleHost)
+                    .appendQueryParameter(COUNTRY,country)
                     .build();
 
             URL url = new URL(builtUri.toString());
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(3000);
+            urlConnection.setReadTimeout(3000);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 

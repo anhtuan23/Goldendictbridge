@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import static com.example.dotua.goldendictbridge.Main_Activity.cancelAllAsyncTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
 import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
@@ -56,6 +57,7 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
       @Override
       public void onClick(View v) {
 //        sendMessage(v.getContext(), sendString,R.integer.action_not_defined);
+        cancelAllAsyncTask();
         executeDirectTranslateTask(sendString);
         executeDirectTranslateImageView(sendString);
         resetCardViewPosition();

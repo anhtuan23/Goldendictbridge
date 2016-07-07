@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTranslateAutoFitTextView;
+import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTranslateTextView;
 
 /**
  * Created by dotua on 29-Jun-16.
@@ -30,7 +30,7 @@ public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-        changeDirectTranslateAutoFitTextView("Translating "+ values[0]);
+        changeDirectTranslateTextView("Translating "+ values[0]);
     }
 
     @Override
@@ -141,6 +141,6 @@ public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        changeDirectTranslateAutoFitTextView(s);
+        changeDirectTranslateTextView(s);
     }
 }

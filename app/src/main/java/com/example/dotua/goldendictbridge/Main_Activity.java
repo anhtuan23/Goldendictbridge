@@ -16,14 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.grantland.widget.AutofitTextView;
 
 import static com.example.dotua.goldendictbridge.Main_MyFragment.newMyFragmentInstance;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
@@ -32,11 +31,12 @@ public class Main_Activity extends NavigationDrawerActivity {
 
     private static Menu mOptionsMenu = null;
     public Menu getMenu(){return mOptionsMenu;}
-    private static AutofitTextView directTranslateTextView;
+    private static TextView directTranslateTextView;
     private static CardView cardView;
-    private  static ImageView imageView;
+    private static ImageView imageView;
 
-
+    private static List<DirectTranslate_Task> directTranslate_taskList = new ArrayList<>();
+    private static List<DirectTranslate_GetImageTask> directTranslate_getImageTaskList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class Main_Activity extends NavigationDrawerActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         cardView = (CardView)findViewById(R.id.card_view) ;
-        directTranslateTextView = (AutofitTextView) findViewById(R.id.direct_translate);
+        directTranslateTextView = (TextView) findViewById(R.id.direct_translate);
         imageView = (ImageView) findViewById(R.id.thumbnail);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
@@ -152,13 +152,35 @@ public class Main_Activity extends NavigationDrawerActivity {
         searchView.setIconified(false);
     }
 
-    public static void changeDirectTranslateAutoFitTextView(String translatedText){
+    public static void changeDirectTranslateTextView(String translatedText){
         directTranslateTextView.setText(translatedText);
+    }
+
+    public static void changeImageDirectTranslateImageView(String imageUrl){
+//        okhttp3.OkHttpClient okHttp3Client = new okhttp3.OkHttpClient.Builder()
+//                .connectTimeout(3, TimeUnit.SECONDS)
+//                .writeTimeout(3, TimeUnit.SECONDS)
+//                .readTimeout(3, TimeUnit.SECONDS)
+//                .build();
+//        OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(okHttp3Client);
+//        Picasso picasso = new Picasso.Builder(imageView.getContext())
+//                .downloader(okHttp3Downloader)
+//                .build();
+        Picasso.with(imageView.getContext())
+                .load(imageUrl)
+                .fit()
+                .placeholder(R.drawable.background2)
+                .error(R.drawable.error)
+                .into(imageView);
+//        Picasso.with(imageView.getContext())
+//                .load("https://www.google.com/work/images/logo/google-for-work-social-icon.png")
+//                .into(imageView);
     }
 
     public static void executeDirectTranslateTask(String string){
         DirectTranslate_Task directTranslate_Task = new DirectTranslate_Task();
-        directTranslate_Task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, string);
+        directTranslate_taskList.add(directTranslate_Task);
+        directTranslate_Task.execute(string);
     }
 
     public static void executeDirectTranslateImageView(String query){
@@ -166,17 +188,27 @@ public class Main_Activity extends NavigationDrawerActivity {
                 new DirectTranslate_GetImageTask.AsyncResponse(){
                     @Override
                     public void processFinish(String imageUrl){
-//                        Toast.makeText(imageView.getContext(), imageUrl, Toast.LENGTH_SHORT).show();
-                        Picasso.with(imageView.getContext())
-                                .load(imageUrl)
-                                .placeholder(R.drawable.placeholder)
-                                .error(R.drawable.error)
-                                .into(imageView);
+                        changeImageDirectTranslateImageView(imageUrl);
                     }
                 }
         );
-//        directTranslate_getImageTask.execute(query);
-        directTranslate_getImageTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,query);
+        directTranslate_getImageTaskList.add(directTranslate_getImageTask);
+        directTranslate_getImageTask.execute(query);
+    }
+
+    public static void cancelAllAsyncTask(){
+        Picasso.with(imageView.getContext()).cancelRequest(imageView);
+        for(DirectTranslate_Task task : directTranslate_taskList){
+            if(task.getStatus().equals(AsyncTask.Status.RUNNING))
+                task.cancel(true);
+        }
+        directTranslate_taskList.clear();
+
+        for(DirectTranslate_GetImageTask task : directTranslate_getImageTaskList){
+            if(task.getStatus().equals(AsyncTask.Status.RUNNING))
+                task.cancel(true);
+        }
+        directTranslate_taskList.clear();
     }
 
     public static void resetCardViewPosition(){

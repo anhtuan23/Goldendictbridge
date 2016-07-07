@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static com.example.dotua.goldendictbridge.Main_Activity.cancelAllAsyncTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
 import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
@@ -64,6 +65,7 @@ public class Main_MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String sendString = getReceivedWord();
+                cancelAllAsyncTask();
                 executeDirectTranslateTask(sendString);
                 executeDirectTranslateImageView(sendString);
                 resetCardViewPosition();
