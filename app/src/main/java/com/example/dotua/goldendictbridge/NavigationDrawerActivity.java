@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.CompoundButton;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 /**
  * Created by dotua on 10-Jun-16.
  */
@@ -34,6 +36,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.main__activity_main);
 
         ViewStub viewStub = (ViewStub) findViewById(R.id.stub_import);

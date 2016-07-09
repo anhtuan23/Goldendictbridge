@@ -3,6 +3,7 @@ package com.example.dotua.goldendictbridge;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,11 +16,10 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,8 @@ public class Main_Activity extends NavigationDrawerActivity {
     public Menu getMenu(){return mOptionsMenu;}
     private static TextView directTranslateTextView;
     private static CardView cardView;
-    private static ImageView imageView;
+//    private static ImageView imageView;
+    private static SimpleDraweeView simpleDraweeView;
 
     private static List<DirectTranslate_Task> directTranslate_taskList = new ArrayList<>();
     private static List<DirectTranslate_GetImageTask> directTranslate_getImageTaskList = new ArrayList<>();
@@ -50,7 +51,8 @@ public class Main_Activity extends NavigationDrawerActivity {
 
         cardView = (CardView)findViewById(R.id.card_view) ;
         directTranslateTextView = (TextView) findViewById(R.id.direct_translate);
-        imageView = (ImageView) findViewById(R.id.thumbnail);
+//        imageView = (ImageView) findViewById(R.id.thumbnail);
+        simpleDraweeView = (SimpleDraweeView) findViewById(R.id.sdvImage);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
     }
@@ -157,24 +159,8 @@ public class Main_Activity extends NavigationDrawerActivity {
     }
 
     public static void changeImageDirectTranslateImageView(String imageUrl){
-//        okhttp3.OkHttpClient okHttp3Client = new okhttp3.OkHttpClient.Builder()
-//                .connectTimeout(3, TimeUnit.SECONDS)
-//                .writeTimeout(3, TimeUnit.SECONDS)
-//                .readTimeout(3, TimeUnit.SECONDS)
-//                .build();
-//        OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(okHttp3Client);
-//        Picasso picasso = new Picasso.Builder(imageView.getContext())
-//                .downloader(okHttp3Downloader)
-//                .build();
-        Picasso.with(imageView.getContext())
-                .load(imageUrl)
-                .fit()
-                .placeholder(R.drawable.background2)
-                .error(R.drawable.error)
-                .into(imageView);
-//        Picasso.with(imageView.getContext())
-//                .load("https://www.google.com/work/images/logo/google-for-work-social-icon.png")
-//                .into(imageView);
+        Uri imageUri = Uri.parse(imageUrl);
+        simpleDraweeView.setImageURI(imageUri);
     }
 
     public static void executeDirectTranslateTask(String string){
@@ -197,7 +183,7 @@ public class Main_Activity extends NavigationDrawerActivity {
     }
 
     public static void cancelAllAsyncTask(){
-        Picasso.with(imageView.getContext()).cancelRequest(imageView);
+//        Picasso.with(imageView.getContext()).cancelRequest(imageView);
         for(DirectTranslate_Task task : directTranslate_taskList){
             if(task.getStatus().equals(AsyncTask.Status.RUNNING))
                 task.cancel(true);
