@@ -27,6 +27,16 @@ public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     private String NO_INTERNET_CONNECTION = "No internet connection.";
     private String CANNOT_FIND_RESULT = "Cannot find result.";
 
+    public interface AsyncResponse {
+        void processFinish(String output);
+    }
+
+    public AsyncResponse delegate = null;
+
+    public DirectTranslate_Task(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
+
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
@@ -142,5 +152,6 @@ public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         changeDirectTranslateTextView(s);
+        delegate.processFinish(s);
     }
 }

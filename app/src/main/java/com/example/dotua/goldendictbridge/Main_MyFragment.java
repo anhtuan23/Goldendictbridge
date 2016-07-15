@@ -10,17 +10,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import static com.example.dotua.goldendictbridge.Main_Activity.cancelAllAsyncTask;
-import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
-import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
-import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getWordList;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.sendMessage;
-import static com.example.dotua.goldendictbridge.Main_SharedFunction.showPopupMenu;
 
 public class Main_MyFragment extends Fragment {
 
@@ -56,32 +50,10 @@ public class Main_MyFragment extends Fragment {
         recyclerView.addItemDecoration(new RecyclerView_MarginDecoration(context));
         recyclerView.setHasFixedSize(true);
 
-        TextView header = (TextView)LayoutInflater.from(context).inflate(
-                R.layout.recycler_view__auto_fit_header,
-                recyclerView,
-                false);
-        header.setText(getReceivedWord());
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String sendString = getReceivedWord();
-                cancelAllAsyncTask();
-                executeDirectTranslateTask(sendString);
-                executeDirectTranslateImageView(sendString);
-                resetCardViewPosition();
-            }
-        });
-        header.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v) {
-                showPopupMenu(v, ((TextView)v).getText().toString());
-                return true;
-            }
-        });
+
 
         final RecyclerView_WordListAdapter adapter = new RecyclerView_WordListAdapter(
-                header,
-                getWordList(),
+                 getWordList(),
                 numberOfCharacter);
 
         final GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();

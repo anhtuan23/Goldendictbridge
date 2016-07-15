@@ -41,7 +41,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    />
+                    android:background="@color/colorCardBackground"/>
                 <TextView
                     android:id="@+id/direct_translate"
                     android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    />
+                    android:background="@color/colorCardBackground"/>
             </LinearLayout>
 
         </ScrollView>

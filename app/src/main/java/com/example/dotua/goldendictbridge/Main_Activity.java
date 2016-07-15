@@ -164,7 +164,14 @@ public class Main_Activity extends NavigationDrawerActivity {
     }
 
     public static void executeDirectTranslateTask(String string){
-        DirectTranslate_Task directTranslate_Task = new DirectTranslate_Task();
+        DirectTranslate_Task directTranslate_Task = new DirectTranslate_Task(
+                new DirectTranslate_Task.AsyncResponse(){
+                    @Override
+                    public void processFinish(String translatedText){
+                        executeDirectTranslateImageView(translatedText);
+                    }
+                }
+        );
         directTranslate_taskList.add(directTranslate_Task);
         directTranslate_Task.execute(string);
     }

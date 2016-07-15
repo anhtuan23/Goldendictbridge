@@ -1,16 +1,49 @@
-<TextView
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Header ...................."
-    android:textColor="@color/colorText"
-    android:background="@color/colorCardBackground"
-    android:textSize="50sp"
-    android:textAlignment="center"
-    android:elevation="8dp"
-    android:padding="8dp"
-    android:longClickable="true"
-    tools:text="0"/>
+    card_view:cardElevation="8dp"
+    android:background="@color/colorCardBackground">
+
+        <FrameLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/headerImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            fresco:actualImageScaleType="centerCrop"
+                            fresco:placeholderImage="@drawable/background"
+                            fresco:placeholderImageScaleType="centerCrop"
+                            fresco:failureImage="@drawable/error"
+                            card_view:failureImageScaleType="centerCrop"
+                            fresco:progressBarImage="@drawable/circular_progress_bar"
+                            fresco:progressBarImageScaleType="centerCrop"
+                            fresco:progressBarAutoRotateInterval="1000"
+                            fresco:backgroundImage="@color/colorCardBackground"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/headerText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="300dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#fff"
+                    android:background="#70000000"
+                    android:textSize="50sp"
+                    android:textAlignment="center"
+                    android:padding="8dp"
+                    android:longClickable="true"
+                    android:gravity="center"/>
+
+        </FrameLayout>
+</android.support.v7.widget.CardView>
+
