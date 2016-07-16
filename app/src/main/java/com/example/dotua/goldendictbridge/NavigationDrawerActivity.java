@@ -15,10 +15,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.CompoundButton;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
 
 /**
  * Created by dotua on 10-Jun-16.
@@ -36,12 +33,12 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
+//        Fresco.initialize(this);
         setContentView(R.layout.main__activity_main);
 
-        ViewStub viewStub = (ViewStub) findViewById(R.id.stub_import);
-        viewStub.setLayoutResource(R.layout.main__activity_main_content);
-        viewStub.inflate();
+//        ViewStub viewStub = (ViewStub) findViewById(R.id.stub_import);
+//        viewStub.setLayoutResource(R.layout.main__activity_main_content);
+//        viewStub.inflate();
 
         //Setup Navigation Drawer
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

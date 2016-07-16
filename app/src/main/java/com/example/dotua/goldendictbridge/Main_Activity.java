@@ -3,7 +3,6 @@ package com.example.dotua.goldendictbridge;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,10 +15,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +31,11 @@ public class Main_Activity extends NavigationDrawerActivity {
     public Menu getMenu(){return mOptionsMenu;}
     private static TextView directTranslateTextView;
     private static CardView cardView;
+    private static String translatedText = "Great wall of china wallpaper";
 //    private static ImageView imageView;
-    private static SimpleDraweeView simpleDraweeView;
 
     private static List<DirectTranslate_Task> directTranslate_taskList = new ArrayList<>();
-    private static List<DirectTranslate_GetImageTask> directTranslate_getImageTaskList = new ArrayList<>();
+    private static List<RecyclerView_GetImageUrlTask> recyclerView_getImageUrlTaskList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +49,7 @@ public class Main_Activity extends NavigationDrawerActivity {
 
         cardView = (CardView)findViewById(R.id.card_view) ;
         directTranslateTextView = (TextView) findViewById(R.id.direct_translate);
-//        imageView = (ImageView) findViewById(R.id.thumbnail);
-        simpleDraweeView = (SimpleDraweeView) findViewById(R.id.sdvImage);
+//        simpleDraweeView = (SimpleDraweeView) findViewById(R.id.sdvImage);
 
         Main_SharedFunction.generateWordList(this,this.getIntent());
     }
@@ -144,7 +141,6 @@ public class Main_Activity extends NavigationDrawerActivity {
         super.onPostCreate(savedInstanceState);
         String receivedWord = getReceivedWord();
         executeDirectTranslateTask(receivedWord);
-        executeDirectTranslateImageView(receivedWord);
     }
 
     public static void updateSearchViewQuery(String query) {
@@ -158,17 +154,12 @@ public class Main_Activity extends NavigationDrawerActivity {
         directTranslateTextView.setText(translatedText);
     }
 
-    public static void changeImageDirectTranslateImageView(String imageUrl){
-        Uri imageUri = Uri.parse(imageUrl);
-        simpleDraweeView.setImageURI(imageUri);
-    }
-
     public static void executeDirectTranslateTask(String string){
         DirectTranslate_Task directTranslate_Task = new DirectTranslate_Task(
                 new DirectTranslate_Task.AsyncResponse(){
                     @Override
-                    public void processFinish(String translatedText){
-                        executeDirectTranslateImageView(translatedText);
+                    public void processFinish(String translated){
+                        translatedText = translated + "wallpaper";
                     }
                 }
         );
@@ -176,17 +167,22 @@ public class Main_Activity extends NavigationDrawerActivity {
         directTranslate_Task.execute(string);
     }
 
-    public static void executeDirectTranslateImageView(String query){
-        DirectTranslate_GetImageTask directTranslate_getImageTask = new DirectTranslate_GetImageTask(
-                new DirectTranslate_GetImageTask.AsyncResponse(){
+    public static void executeHeaderImageView(final ImageView imageView){
+        RecyclerView_GetImageUrlTask recyclerView_getImageUrlTask = new RecyclerView_GetImageUrlTask(
+                new RecyclerView_GetImageUrlTask.AsyncResponse(){
                     @Override
                     public void processFinish(String imageUrl){
-                        changeImageDirectTranslateImageView(imageUrl);
+//                        Picasso.with(imageView.getContext())
+//                                .load(imageUrl)
+//                                .resize(400, 400)
+////                                .placeholder(R.drawable.image4)
+////                                .error(R.drawable.image2)
+//                                .into(imageView);
                     }
                 }
         );
-        directTranslate_getImageTaskList.add(directTranslate_getImageTask);
-        directTranslate_getImageTask.execute(query);
+        recyclerView_getImageUrlTaskList.add(recyclerView_getImageUrlTask);
+        recyclerView_getImageUrlTask.execute(translatedText);
     }
 
     public static void cancelAllAsyncTask(){
@@ -197,7 +193,7 @@ public class Main_Activity extends NavigationDrawerActivity {
         }
         directTranslate_taskList.clear();
 
-        for(DirectTranslate_GetImageTask task : directTranslate_getImageTaskList){
+        for(RecyclerView_GetImageUrlTask task : recyclerView_getImageUrlTaskList){
             if(task.getStatus().equals(AsyncTask.Status.RUNNING))
                 task.cancel(true);
         }

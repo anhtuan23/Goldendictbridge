@@ -19,15 +19,15 @@ import java.util.Random;
 /**
  * Created by dotua on 29-Jun-16.
  */
-public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String> {
+public class RecyclerView_GetImageUrlTask extends AsyncTask<String,Void, String> {
     private final String CUSTOM_SEARCH_ID = "004751125689537977935:7fpfquvojn0";
     private final String SERVER_KEY_ID_1_GET_IMAGE = "AIzaSyCilOcsqmPP5Rkucxv8GpucQmjzffBhwL4";
     private final String SERVER_KEY_ID_2_GET_2 = "AIzaSyDlIFn0d_9Dn6OLrr8fKGyj0rs2lqU02jw";
     private final String SERVER_KEY_ID_3_GET_3 = "AIzaSyAHXYv4351KQkQE_pJy8fYeWvvKpCPMkdY";
 
-    private String LOG_TAG = DirectTranslate_GetImageTask.class.getSimpleName();
-    private String NO_INTERNET_CONNECTION = "http://lorempixel.com/200/200/";
-    private String CANNOT_FIND_RESULT = "http://lorempixel.com/200/200/";
+    private String LOG_TAG = RecyclerView_GetImageUrlTask.class.getSimpleName();
+    private String NO_INTERNET_CONNECTION = "http://lorempixel.com/400/400/";
+    private String CANNOT_FIND_RESULT = "http://lorempixel.com/400/400/";
 
     public interface AsyncResponse {
         void processFinish(String output);
@@ -35,7 +35,7 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
 
     public AsyncResponse delegate = null;
 
-    public DirectTranslate_GetImageTask(AsyncResponse delegate){
+    public RecyclerView_GetImageUrlTask(AsyncResponse delegate){
         this.delegate = delegate;
     }
 
@@ -75,7 +75,7 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
 
             String searchType = "image";
             String fileType = "jpg";
-            String imgSize = "medium";
+            String imgSize = "large";
             String numberOfResults = "1";
             String returnFormat = "json";
             String imgColorType = "color";
@@ -119,8 +119,8 @@ public class DirectTranslate_GetImageTask extends AsyncTask<String,Void, String>
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setConnectTimeout(3000);
-            urlConnection.setReadTimeout(3000);
+            urlConnection.setConnectTimeout(5000);
+            urlConnection.setReadTimeout(5000);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 

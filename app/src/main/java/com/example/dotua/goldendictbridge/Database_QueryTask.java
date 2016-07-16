@@ -54,12 +54,13 @@ public class Database_QueryTask extends AsyncTask<WordHistory_Adapter, Void, Lis
         );
 
         List<String> listString = new ArrayList<>();
-        cursor.moveToFirst();
 
-        do {
-            listString.add(cursor.getString(
-                    cursor.getColumnIndexOrThrow(WordHistory.COLUMN_WORD)));
-        } while (cursor.moveToNext());
+        if (cursor.moveToFirst()) {
+            do {
+                listString.add(cursor.getString(
+                        cursor.getColumnIndexOrThrow(WordHistory.COLUMN_WORD)));
+            } while (cursor.moveToNext());
+        }
 
         return listString;
     }

@@ -4,12 +4,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
 import static com.example.dotua.goldendictbridge.Main_Activity.cancelAllAsyncTask;
-import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateImageView;
 import static com.example.dotua.goldendictbridge.Main_Activity.executeDirectTranslateTask;
+import static com.example.dotua.goldendictbridge.Main_Activity.executeHeaderImageView;
 import static com.example.dotua.goldendictbridge.Main_Activity.resetCardViewPosition;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getDesiredString;
 import static com.example.dotua.goldendictbridge.Main_SharedFunction.getReceivedWord;
@@ -48,12 +51,6 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
         break;
     }
     return viewHolder;
-
-//    if (viewType == ITEM_VIEW_TYPE_HEADER) {
-//      return new RecyclerView_TextViewHolder(header);
-//    }
-//    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view__item, parent, false);
-//    return new RecyclerView_TextViewHolder(view);
   }
 
   @Override
@@ -61,16 +58,29 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
     if (isHeader(position)) {
       RecyclerView_CardViewHolder recyclerView_CardViewHolder =
               (RecyclerView_CardViewHolder)holder;
-//      RelativeLayout header = (RelativeLayout)LayoutInflater.from(context).inflate(
-//              R.layout.recycler_view__auto_fit_header,
-//              recyclerView,
-//              false);
       final String receivedWord = getReceivedWord();
       recyclerView_CardViewHolder.headerTextView.setText(receivedWord);
+
+      final ImageView iv =  recyclerView_CardViewHolder.headerImageView;
+      final TextView tv = recyclerView_CardViewHolder.headerTextView;
+      final ViewTreeObserver observer= tv.getViewTreeObserver();
+      observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+//          iv.setMinimumHeight(tv.getHeight());
+          iv.getLayoutParams().height = tv.getHeight();
+          iv.setImageDrawable(null);
+          iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+          iv.setImageResource(R.drawable.image2);
+          iv.getHeight();
+//          observer.removeOnGlobalLayoutListener(this);
+        }
+      });
+      executeHeaderImageView(recyclerView_CardViewHolder.headerImageView);
+
       recyclerView_CardViewHolder.headerTextView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//        sendMessage(v.getContext(), sendString,R.integer.action_not_defined);
           cancelAllAsyncTask();
           executeDirectTranslateTask(receivedWord);
           resetCardViewPosition();
@@ -97,7 +107,6 @@ public class RecyclerView_WordListAdapter extends RecyclerView.Adapter<RecyclerV
         public void onClick(View v) {
           cancelAllAsyncTask();
           executeDirectTranslateTask(sendString);
-          executeDirectTranslateImageView(sendString);
           resetCardViewPosition();
         }
       });

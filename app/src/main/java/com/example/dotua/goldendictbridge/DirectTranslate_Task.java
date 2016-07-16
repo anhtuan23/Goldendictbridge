@@ -23,7 +23,7 @@ import static com.example.dotua.goldendictbridge.Main_Activity.changeDirectTrans
 public class DirectTranslate_Task extends AsyncTask<String,String, String> {
     private final String API_KEY = "trnsl.1.1.20160628T114419Z.f94e02590b8527ee.cc30b2d8978d8c309a95ff05f53c05d2ceaaf214";
     private final String LANGUAGE_CHINESE_ENGLSIH = "zh-en";
-    private String LOG_TAG = DirectTranslate_GetImageTask.class.getSimpleName();
+    private String LOG_TAG = RecyclerView_GetImageUrlTask.class.getSimpleName();
     private String NO_INTERNET_CONNECTION = "No internet connection.";
     private String CANNOT_FIND_RESULT = "Cannot find result.";
 
